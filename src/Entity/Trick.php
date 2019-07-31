@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="tricks")
+ * 
  */
 class Trick
 {
@@ -67,6 +68,13 @@ class Trick
      */
     private $user;
     /**
+     * The figure belongs to a single category
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tricks")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+    /**
      * Construct function
      */
     public function __construct()
@@ -77,7 +85,7 @@ class Trick
         $this->createdAt = new \DateTime;
     }
 
-    public function getId(): ?integer
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -101,6 +109,22 @@ class Trick
     {
         return $this->updatedAt;
     }
+    public function getCategory()
+    {
+        return $this->category;
+    }
+    public function getIllustrations():Collection
+    {
+        return $this->illustrations;
+    }
+    public function getVideos():Collection
+    {
+        return $this->videos;
+    }
+    public function getComments():Collection
+    {
+        return $this->comments;
+    }
     public function setName($name)
     {
          $this->name = $name;
@@ -120,5 +144,15 @@ class Trick
     public function setUpdatedAt($date)
     {
          $this->updatedAt = $date;
+    }
+    public function setCategory(?Category $cat):self
+    {
+        $this->category = $cat;
+        return $this;
+    }
+    public function setUser(?User $user):self
+    {
+        $this->user = $user;
+        return $this;
     }
 }

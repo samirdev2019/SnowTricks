@@ -78,8 +78,13 @@ class User
     public function __construct()
     {
         $this->subscribedAT = new \DateTime;
+        $this->comments = new ArrayCollection;
+        $this->tricks = new ArrayCollection;
     }
-    public function getId():integer
+    /////////////////////////////////////////////////////
+    //              GETTERS                            // 
+    /////////////////////////////////////////////////////
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -103,7 +108,7 @@ class User
     {
         return $this->avatar;
     }
-    public function getIsValidated(): ?boolean
+    public function getIsValidated(): ?bool
     {
         return $this->isValidated;
     }
@@ -111,41 +116,42 @@ class User
     {
         return $this->confirmation;
     }
-    public function getSubscribedAT(): ?date
+    public function getSubscribedAT()
     {
         return $this->subscribedAT;
     }
     
-    public function SetUsername(string $username):void
+    public function setUsername(string $username):void
     {
         $this->username = $username;
     }
-    public function SetEmail(string $email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
-    public function SetPassword(string $password): void
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
-    public function SetToken(string $token): void
+    public function setToken(string $token): void
     {
         $this->token = $token;
     }
-    public function SetAvatar(string $image): void
+    public function setAvatar(string $image): void
     {
         $this->avatar = $image;
     }
-    public function SetIsValidated(bool $validate): void
+    public function setIsValidated(bool $validate): void
     {
         $this->isValidated = $validate;
     }
-    public function SetConfirmation(string $confirm): void
+    public function setConfirmation(string $confirm): void
     {
         $this->confirmation = $confirm;
     }
-    public function SetSubscribedAT($date): void
+    public function setSubscribedAT($date): void
     {
         $this->subscribedAT = $date;
     }
+    //TODO function add remove (tricks, comments)
 }
