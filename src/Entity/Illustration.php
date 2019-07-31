@@ -64,4 +64,9 @@ class Illustration
     {
         $this->url = $url;
     }
+    public function setTrick(?Trick $trick):self
+    {
+        $this->trick = $trick;
+        return $this;
+    }
 }

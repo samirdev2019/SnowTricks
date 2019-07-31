@@ -57,8 +57,13 @@ class Video
     {
         $this->url = $url;
     }
-    public function setPlatform():void
+    public function setPlatform($platform):void
     {
         $this->platform = $platform;
+    }
+    public function setTrick(?Trick $trick):self
+    {
+        $this->trick = $trick;
+        return $this;
     }
 }

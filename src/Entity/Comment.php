@@ -47,6 +47,9 @@ class Comment
     {
         $this->commentedAt = new \DateTime();
     }
+    //////////////////////////////////////////////////////////
+    //                      Getters                         //
+    /////////////////////////////////////////////////////////
     public function getId():int
     {
         return $this->id;
@@ -59,12 +62,24 @@ class Comment
     {
         return $this->commentedAT;
     }
-    public function setContent(text $content):void
+    public function getTrick()
+    {
+        return $this->trick;
+    }
+    ////////////////////////////////////////////////////////
+    //                  SETTERS                           // 
+    ////////////////////////////////////////////////////////
+    public function setContent($content):void
     {
         $this->content = $content;
     }
     public function setCommentedAt($date):void
     {
         $this->commentedAT = $date;
+    }
+    public function setTrick(?Trick $trick): self
+    {
+        $this->trick = $trick;
+        return $this;
     }
 }
