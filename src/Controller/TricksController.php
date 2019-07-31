@@ -30,8 +30,10 @@ class TricksController extends AbstractController
         $tricks = $repository->findAll();
         return new Response($this->twig->render(
             'tricks/home.html.twig',
-            ['tricks' => $tricks,
-            'firstImg'=> $firstImag]
+            [
+                'tricks' => $tricks,
+                'firstImg'=> $firstImag
+            ]
         ));
 
     }
