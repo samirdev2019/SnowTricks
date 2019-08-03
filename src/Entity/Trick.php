@@ -29,11 +29,6 @@ class Trick
      */ 
     private $description;
     /**
-     * The group of the trick
-     * @ORM\Column(type="string", length=255)
-     */
-    private $groupe;
-    /**
      * the trick creation date
      * @ORM\Column(type="date")
      */

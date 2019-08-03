@@ -82,4 +82,9 @@ class Comment
         $this->trick = $trick;
         return $this;
     }
+    public function setUser(?Trick $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
 }
