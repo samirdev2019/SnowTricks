@@ -63,7 +63,7 @@ class Trick
      */
     private $user;
     /**
-     * The figure belongs to a single category
+     * The snowtrick belongs to a single category
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tricks")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
