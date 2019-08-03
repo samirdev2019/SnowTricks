@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- *@ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  *@ORM\Table(name="comments")
  */
 class Comment
@@ -27,7 +27,7 @@ class Comment
     private $content;
     /**
      * 
-     *@ORM\Column(type="date")
+     *@ORM\Column(type="datetime")
      * 
      */
     private $commentedAt;
@@ -40,7 +40,7 @@ class Comment
     /**
      * 
      *@ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
-     *@ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *@ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
     public function __construct()
@@ -50,36 +50,56 @@ class Comment
     //////////////////////////////////////////////////////////
     //                      Getters                         //
     /////////////////////////////////////////////////////////
-    public function getId():int
+    public function getId(): ?int
     {
         return $this->id;
     }
-    public function getContent():text
+
+    public function getContent(): ?text
     {
         return $this->content;
     }
-    public function getCmmentedAt():date
+
+    public function getCmmentedAt(): \DateTimeInterface
     {
         return $this->commentedAT;
     }
-    public function getTrick()
+
+    public function getTrick(): ?Trick
     {
         return $this->trick;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
     ////////////////////////////////////////////////////////
     //                  SETTERS                           // 
     ////////////////////////////////////////////////////////
-    public function setContent($content):void
+
+    public function setContent(text $content): self
     {
         $this->content = $content;
+        return $this;
     }
-    public function setCommentedAt($date):void
+
+    public function setCommentedAt(\DateTimeInterface $date): self
     {
         $this->commentedAT = $date;
+        return $this;
     }
+
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+        return $this;
+    }
+    
+    public function setUser(?User $trick): self
+    {
+        $this->user = $user;
         return $this;
     }
 }
