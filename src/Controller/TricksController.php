@@ -5,8 +5,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+<<<<<<< HEAD
 use Doctrine\Common\Persistence\ObjectManager;
 use Twig\Environment;
+=======
+use App\Repository\TrickRepository;
+use App\Repository\IllustrationRepository;
+use App\Repository\VideoRepository;
+>>>>>>> entities
 use App\Entity\Trick;
 use App\Entity\Illustration;
 use App\Entity\Category;
@@ -16,6 +22,7 @@ use App\Repository\IllustrationRepository;
 
 class TricksController extends AbstractController 
 {
+<<<<<<< HEAD
     /**
      *
      * @var [TrickRepository]
@@ -36,24 +43,67 @@ class TricksController extends AbstractController
         $this->trickRepos = $trickRepos;
         $this->em = $em;
         $this->imgRep = $imgRep;
+=======
+
+    private $tRepos;
+    private $iRepos;
+    private $vRepos;
+
+    public function __construct(
+        TrickRepository $tRepos,
+        IllustrationRepository $iRepos,
+        VideoRepository $vRepos
+        )
+    {
+        $this->tRepos = $tRepos;
+        $this->iRepos = $iRepos;
+        $this->vRepos = $vRepos;
+>>>>>>> entities
     }
     /**
      * @Route("/",name="home")
      */
     public function index(TrickRepository $trickRepos):Response
     {
+<<<<<<< HEAD
 
         $tricks = $this->trickRepos->findAll();
         dump($tricks);
         $firstImag = $this->imgRep->findOneBy(['id'=>'1']);
         return new Response($this->render(
+=======
+        $firstImag = $this->iRepos->findOneBy(['id'=>'1']);
+        $tricks = $this->tRepos->findAll();
+        return $this->render(
+>>>>>>> entities
             'tricks/home.html.twig',
             [
                 'tricks' => $tricks,
                 'firstImg'=> $firstImag
             ]
-        ));
+        );
 
+    }
+    /**
+     * page detail trick
+     *
+     * @Route("/snowtricks/snowtrick/{id}", name="trick_detail")
+     */
+    public function showTrick(Trick $trick, $id):Response
+    {
+        $image = $this->iRepos->findOneByTrick($id);
+        $illustrations = $this->iRepos->findByTrick($id);
+        $videos = $this->vRepos->findByTrick($id);
+        return $this->render(
+            'tricks/detailtrick.html.twig',
+            [
+                'trick' => $trick,
+                'image' => $image,
+                'illustrations' => $illustrations,
+                'videos' => $videos
+
+            ]
+        );
     }
     /**
      * Login Page
@@ -67,6 +117,7 @@ class TricksController extends AbstractController
         );
     }
     /**
+<<<<<<< HEAD
      * Page tricks
      * @Route("/tricks",name="tricks")
      */
@@ -77,9 +128,12 @@ class TricksController extends AbstractController
     }
     /**
      * page detail trick
+=======
+>>>>>>> entities
      *
-     * @Route("/tricks/trick/{id}", name="trick_detail")
+     * @Route("/snowtricks/new", name="new_trick")
      */
+<<<<<<< HEAD
     public function showTrick(int $id):Response
     {
         $trick = $this->trickRepos->findOneBy(['id'=>$id]);
@@ -93,5 +147,10 @@ class TricksController extends AbstractController
                 
             ]
         );
+=======
+    public function createSnowtick():Response
+    {
+        return $this->render('tricks/newTrick.html.twig');
+>>>>>>> entities
     }
 }

@@ -18,6 +18,7 @@ class TrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Trick::class);
     }
+<<<<<<< HEAD
     /**
      * Undocumented function
      *
@@ -36,6 +37,9 @@ class TrickRepository extends ServiceEntityRepository
         ;
 
     }
+=======
+
+>>>>>>> entities
     // /**
     //  * @return Trick[] Returns an array of Trick objects
     //  */
@@ -65,3 +69,4 @@ class TrickRepository extends ServiceEntityRepository
     }
     */
 }
+
