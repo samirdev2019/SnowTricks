@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * The group of tricks
  * 
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\Table(name="categories")
  */
 class Category
-{   /**
-    * Undocumented variable
+{   
+    /**
     *
     * @ORM\Id()
     * @ORM\GeneratedValue(strategy="AUTO")
@@ -37,25 +37,38 @@ class Category
      * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="category")
      */
     private $tricks;
+    /**
+     * Initialisation of the attributte tricks like as a arrayCollection 
+     */
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
     }
-
-    public function getId()
+    /**
+     *
+     * @return integer|null
+     */
+    public function getId(): ?int
     {
         return $this->id;
     }
-    public function getName()
+    /**
+     *
+     * @return string|null
+     */
+    public function getName(): ?string
     {
         return $this->name;
     }
-    public function getDescription()
+    /**
+     *
+     * @return text|null
+     */
+    public function getDescription(): ?text
     {
         return $this->getDescription;
     }
     /**
-     * Undocumented function
      *
      * @return collection|tricks[]
      */
@@ -63,14 +76,53 @@ class Category
     {
         return $this->tricks;
     }
-    public function setName(string $name): void
+    /**
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
     }
-    public function setDescription(string $description): void
+    /**
+     *
+     * @param string $description
+     * @return self
+     */
+    public function setDescription(string $description): self
     {
         $this->name = $description;
+        return $this;
     }
-    //TODO add and remove trick function
-
+    /**
+     * The method allow to add a new trick
+     *
+     * @param Trick $trick
+     * @return self
+     */
+    public function addTrick(Trick $trick): self
+    {
+        if(!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setCategory($this);
+        }
+        return $this;
+    }
+    /**
+     * This function allow to remove an snowtrick of the category
+     *
+     * @param Trick $trick
+     * @return self
+     */
+    public function removeTrick(Trick $trick): self
+    {
+        if($this->tricks->contains($trick)) {
+            $this->tricks->removeElement($trick);
+            if($trick->getCategory() === $this) {
+                $trick->setCategory(null);
+            }
+        }
+    }
 }

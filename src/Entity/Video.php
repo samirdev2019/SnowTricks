@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- *@ORM\Entity()
+ *@ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  *@ORM\Table(name="videos")
  */
 class Video
@@ -26,41 +26,74 @@ class Video
     private $platform;
     /**
      * 
-     *
      * @ORM\Column(type="string", length=255)
      */
     private $url;
     /**
-     * 
+     * A snowtrick can have many videos,an video belongs only to one snowtrick
+     * the video must be accorded to one trick
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="videos")
-     * @ORM\JoinColumn(name="trickId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="id", nullable=false)
      */
     private $trick;
-    public function __construct()
-    {
-
-    }
-    public function getId():integer
+    /**
+     *
+     * @return integer|null
+     */
+    public function getId(): ?integer
     {
         return $this->id;
     }
-    public function getUrl():string
+    /**
+     *
+     * @return string|null
+     */
+    public function getUrl(): ?string
     {
         return $this->url;
     }
-    public function getPlatform():string
+    /**
+     *
+     * @return string|null
+     */
+    public function getPlatform(): ?string
     {
         return $this->platform;
     }
-    public function setUrl(string $url):void
+    /**
+     *
+     * @return Trick|null
+     */
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
+    }
+    /**
+     *
+     * @param string $url
+     * @return self
+     */
+    public function setUrl(string $url): self
     {
         $this->url = $url;
+        return $this;
     }
-    public function setPlatform($platform):void
+    /**
+     *
+     * @param string $platform
+     * @return self
+     */
+    public function setPlatform(string $platform): self
     {
         $this->platform = $platform;
+        return $this;
     }
+    /**
+     *
+     * @param Trick|null $trick
+     * @return self
+     */
     public function setTrick(?Trick $trick):self
     {
         $this->trick = $trick;

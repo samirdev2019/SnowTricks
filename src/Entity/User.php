@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
 class User
@@ -53,26 +53,26 @@ class User
     /**
      * The subscribing date
      * 
-     *@ORM\Column(type="date")
+     *@ORM\Column(type="datetime")
      */
     private $subscribedAT;
     /**
-     * This var will be used just for the password confirmation
+     * This attribut will be used just for the password confirmation
      *
      * @var [string]
      */
     private $confirmation;
     /**
-     * The user can create many tricks
+     * The user can create many snowtricks
      *
      *@ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="user")
      */
     private $tricks;
     /**
-     * The user can send many comments on the trick
+     * The user can send many comments on the trick, the removal user leads to delete all of his comments
      *
      * @var [collection]|comment[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
      */
     private $comments;
     public function __construct()
@@ -84,74 +84,225 @@ class User
     /////////////////////////////////////////////////////
     //              GETTERS                            // 
     /////////////////////////////////////////////////////
+    /**
+     *
+     * @return integer|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
+    /**
+     *
+     * @return string|null
+     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
+    /**
+     *
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
+    /**
+     *
+     * @return string|null
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
+    /**
+     *
+     * @return string|null
+     */
     public function getToken(): ?string
     {
         return $this->token;
     }
+    /**
+     *
+     * @return string|null
+     */
     public function getAvatar(): ?string
     {
         return $this->avatar;
     }
+    /**
+     *
+     * @return boolean|null
+     */
     public function getIsValidated(): ?bool
     {
         return $this->isValidated;
     }
+    /**
+     *
+     * @return string|null
+     */
     public function getConfirmation(): ?string
     {
         return $this->confirmation;
     }
-    public function getSubscribedAT()
+    /**
+     *
+     * @return \DateTimeInterface
+     */
+    public function getSubscribedAT(): \DateTimeInterface
     {
         return $this->subscribedAT;
     }
-    
-    public function setUsername(string $username):void
+    /**
+     *
+     * @param string $username
+     * @return self
+     */
+    public function setUsername(string $username): self
     {
         $this->username = $username;
+        return $this;
     }
-    public function setEmail(string $email): void
+    /**
+     *
+     * @param string $email
+     * @return self
+     */
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+        return $this;
     }
-    public function setPassword(string $password): void
+    /**
+     *
+     * @param string $password
+     * @return self
+     */
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
     }
-    public function setToken(string $token): void
+    /**
+     *
+     * @param string $token
+     * @return self
+     */
+    public function setToken(string $token): self
     {
         $this->token = $token;
+        return $this;
     }
-    public function setAvatar(string $image): void
+    /**
+     *
+     * @param string $image
+     * @return self
+     */
+    public function setAvatar(string $image): self
     {
         $this->avatar = $image;
+        return $this;
+
     }
-    public function setIsValidated(bool $validate): void
+    /**
+     *
+     * @param boolean $validate
+     * @return self
+     */
+    public function setIsValidated(bool $validate): self
     {
         $this->isValidated = $validate;
+        return $this;
+
     }
-    public function setConfirmation(string $confirm): void
+    /**
+     *
+     * @param string $confirm
+     * @return self
+     */
+    public function setConfirmation(string $confirm): self
     {
         $this->confirmation = $confirm;
+        return $this;
     }
-    public function setSubscribedAT($date): void
+    /**
+     *
+     * @param \DateTimeInterface $date
+     * @return self
+     */
+    public function setSubscribedAT(\DateTimeInterface $date): self
     {
         $this->subscribedAT = $date;
+        return $this;
     }
-    //TODO function add remove (tricks, comments)
+    /**
+     * This function allow to add a snowtrick according to this user
+     *
+     * @param Trick $trick
+     * @return self
+     */
+    public function addTrick(Trick $trick): self
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setUser($this);
+        }
+
+        return $this;
+    }
+    /**
+     * This function allow to remove a snowtrick according to this user
+     * and update the trick object user attribut
+     *
+     * @param Trick $trick
+     * @return self
+     */
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->contains($trick)) {
+            $this->tricks->removeElement($trick);
+            if ($trick->getUser() === $this) {
+                $trick->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * The user can add a comment in the collection comments 
+     * and update the object comment user     
+     *
+     * @param Comment $comment
+     * @return self
+     */
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+    /**
+     * This function remove comment of collection comments updating the attribut
+     * according in the comment object 
+     *
+     * @param Comment $comment
+     * @return self
+     */
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }  
 }
