@@ -18,7 +18,7 @@ class TrickFixtures extends Fixture
         $faker = \Faker\Factory::create();
 
         $category = new Category();
-        $category->setName=($faker->sentence());
+        $category->setName($faker->sentence());
         $category->setDescription($faker->paragraph());
 
         $manager->persist($category);
@@ -27,44 +27,46 @@ class TrickFixtures extends Fixture
         $user->setUsername($faker->userName());
         $user->setEmail($faker->email());
         $user->setPassword($faker->password());
-        $user->setAvatar($faker->imageUrl());
         $user->setToken($faker->md5());
         $user->setIsValidated($faker->boolean());
+        $user->setAvatar($faker->imageUrl());
         $user->setSubscribedAT($faker->dateTime());
         $manager->persist($user);
         for($i = 1; $i <=10; $i++) {
             $trick = new Trick();
+            $trick->setUser($user);
+            $trick->setCategory($category);
             $trick->setName($faker->sentence());
             $trick->setDescription($faker->paragraph());
-            $trick->setGroupe($faker->name());
             $trick->setCreatedAt($faker->dateTime());
             $trick->setUpdatedAt($faker->dateTime());
-            $trick->setCategory($category);
-            $trick->setUser($user);
             
             $manager->persist($trick);
+
             for($j=1; $j<=5; $j++) {
                 $comment = new Comment();
+                $comment->setTrick($trick);
+                $comment->setUser($user);
                 $content = '<p>'.join($faker->paragraphs(3),'</p><p>').'</p><p>';
                 $comment->setContent($content);
                 $comment->setCommentedAt($faker->dateTime());
-                $comment->setTrick($trick);
+                
                 $manager->persist($comment);
             }
             for($k=1; $k<=3; $k++) {
                 $image = new Illustration();
+                $image->setTrick($trick);
                 $image->setName($faker->name());
                 $image->setUrl($faker->imageUrl());
-                $image->setTrick($trick);
-
+               
                 $manager->persist($image);
             }
             for($m=1; $m<=3; $m++) {
                 $media = new Video();
-                $media->setUrl($faker->mimeType());
-                $media->setPlatform($faker->name());
                 $media->setTrick($trick);
-
+                $media->setPlatform($faker->name());
+                $media->setUrl($faker->mimeType());
+                
                 $manager->persist($media);
             }
         }

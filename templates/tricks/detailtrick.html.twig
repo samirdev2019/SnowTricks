@@ -1,8 +1,13 @@
 <div class="card col-xm-12 col-md-6 col-lg-3">
-    <img class="card-img-top" src="{{ firstImg.url }}" alt="Card image cap">
+    <pre>
+  
+    {{ dump(trick) }}
+  
+</pre>
+    <img class="card-img-top" src="{{ img.url }}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{ trick.name }}</h5>
       <p class="card-text">{{ trick.description }}</p>
-      <a href="{{ path ('trick_detail')}}" class="btn btn-primary">en savoir plus</a>
+      <a href="{{ path ('trick_detail',{id:trick.id})}}" class="btn btn-primary">en savoir moins</a>
     </div>
   </div>
