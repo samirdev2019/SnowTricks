@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Trick|null find($id, $lockMode = null, $lockVersion = null)
- * @method Trick|null findOneBy(array $criteria, array $orderBy = null)
- * @method Trick[]    findAll()
- * @method Trick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Video|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Video|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Video[]    findAll()
+ * @method Video[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TrickRepository extends ServiceEntityRepository
+class VideoRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Trick::class);
+        parent::__construct($registry, Video::class);
     }
 
     // /**
-    //  * @return Trick[] Returns an array of Trick objects
+    //  * @return Video[] Returns an array of Video objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TrickRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Trick
+    public function findOneBySomeField($value): ?Video
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

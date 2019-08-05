@@ -4,38 +4,65 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
+use App\Repository\TrickRepository;
+use App\Repository\IllustrationRepository;
+use App\Repository\VideoRepository;
 use App\Entity\Trick;
 use App\Entity\Illustration;
 
 class TricksController extends AbstractController 
 {
-    /**
-     * @var Environment 
-     */
-    private $twig;
 
-    public function __construct(Environment $twig)
+    private $tRepos;
+    private $iRepos;
+    private $vRepos;
+
+    public function __construct(
+        TrickRepository $tRepos,
+        IllustrationRepository $iRepos,
+        VideoRepository $vRepos
+        )
     {
-        $this->twig = $twig;
+        $this->tRepos = $tRepos;
+        $this->iRepos = $iRepos;
+        $this->vRepos = $vRepos;
     }
     /**
      * @Route("/",name="home")
      */
     public function index():Response
     {
-        $repository = $this->getDoctrine()->getRepository(Trick::class);
-        $rep = $this->getDoctrine()->getRepository(Illustration::class);
-        $firstImag = $rep->findOneBy(['id'=>'1']);
-        $tricks = $repository->findAll();
-        return new Response($this->twig->render(
+        $firstImag = $this->iRepos->findOneBy(['id'=>'1']);
+        $tricks = $this->tRepos->findAll();
+        return $this->render(
             'tricks/home.html.twig',
             [
                 'tricks' => $tricks,
                 'firstImg'=> $firstImag
             ]
-        ));
+        );
 
+    }
+    /**
+     * page detail trick
+     *
+     * @Route("/snowtricks/snowtrick/{id}", name="trick_detail")
+     */
+    public function showTrick(Trick $trick, $id):Response
+    {
+        $image = $this->iRepos->findOneByTrick($id);
+        $illustrations = $this->iRepos->findByTrick($id);
+        $videos = $this->vRepos->findByTrick($id);
+        return $this->render(
+            'tricks/detailtrick.html.twig',
+            [
+                'trick' => $trick,
+                'image' => $image,
+                'illustrations' => $illustrations,
+                'videos' => $videos
+
+            ]
+        );
     }
     /**
      * Login Page
@@ -49,22 +76,11 @@ class TricksController extends AbstractController
         );
     }
     /**
-     * Page tricks
-     * @Route("/tricks",name="tricks")
-     */
-    public function tricks():Response
-    {
-        $rep = $this->getDoctrine()->getRepository(Illustration::class);
-        $firstImag = $rep->findOneBy(['id'=>'1']);
-        return $this->render('tricks/tricks.html.twig',['curent_menu' => 'tricks']);
-    }
-    /**
-     * page detail trick
      *
-     * @Route("/tricks/trick/{id}", name="trick_detail")
+     * @Route("/snowtricks/new", name="new_trick")
      */
-    public function showTrick(Trick $trick):Response
+    public function createSnowtick():Response
     {
-        return $this->render('tricks/detailtrick.html.twig',['trick'=> $trick]);
+        return $this->render('tricks/newTrick.html.twig');
     }
 }

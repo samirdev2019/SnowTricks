@@ -64,7 +64,7 @@ class Category
      *
      * @return text|null
      */
-    public function getDescription(): ?text
+    public function getDescription(): ?string
     {
         return $this->getDescription;
     }

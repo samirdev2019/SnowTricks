@@ -239,7 +239,7 @@ class Trick
      * @param Illustartion $image
      * @return self
      */
-    public function addIllustration(Illustartion $image): self
+    public function addIllustration(Illustration $image): self
     {
         if(!$this->illustrations->contains($image)) {
             $this->illustrations[] = $image;
