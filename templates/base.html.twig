@@ -5,6 +5,8 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/afa0409dc0.js"></script>
         {% endblock %}
     </head>
     <body>
@@ -21,6 +23,9 @@
               </li>
               <li class="nav-item mr-2">
                 <a class=" nav-link {% if curent_menu is defined and curent_menu == 'tricks' %} active {% endif %}"  href="{{ path ('home')}}#tricks">Tricks</a>
+              <li class="nav-item mr-2">
+                <a class=" nav-link {% if curent_menu is defined and curent_menu == 'tricks' %} active {% endif %}"  href="{{ path ('new_trick')}}#tricks">new snowtrick</a>
+              </li>
               </li>
               <li class="nav-item mr-2">
                   <a class="nav-link {% if curent_menu is defined and curent_menu == 'login' %} active {% endif %}" href="{{ path ('login')}}">Sign in</a>

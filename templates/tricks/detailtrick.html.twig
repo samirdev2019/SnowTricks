@@ -2,7 +2,7 @@
 {% block title %}Tricks-detail{% endblock %}
 {% block body %}
   <section class="mb-5 w-40 mx-auto bg">
-      <div id="carouselTricksDetail" class="carousel slide col-lg-10 style="height:60%" data-ride="carousel">
+      <div id="carouselTricksDetail" class="carousel slide col-lg-10" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img class="d-block w-100" src="{{ image.url }}" alt="First slide">
@@ -12,7 +12,7 @@
               <img class="d-block w-100" src="{{illustration.url}}" alt="{{ illustration.name }}">
             </div>
             <div class="carousel-caption d-none d-md-block">
-                <h5>{{ illustration.name }}ss</h5>
+                <h5>{{ illustration.name }}</h5>
                 <p>...</p>
               </div>
             {% endfor %}
@@ -35,18 +35,37 @@
     {% endfor %}
     {% for video in videos %}
       <div class="card col-xm-2 col-md-2 col-lg-2">
-        <img class="card-img-top" src="{{ video.url }}" alt="{{ video.platform }}">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+          </div>
       </div>
     {% endfor %}
   </section>
   <section class="row">
     <div class="d-block mt-5 mb-5 p-4">
       <p>{{ trick.description }}</p>
-    </div>
-    <div class="row d-flex bg-info">
+      <h2>{{ trick.category.name }}</h2>
+      <h3>{{ trick.user.username}}</h3>
       <span>{{trick.createdAt | date('d/m/Y')}}&nbsp;&nbsp;{{trick.createdAt | date('H:i')}}</span>
+
     </div>
+    
+    
       
     </div>
+  </section>
+  <section id="commentaire">
+    {% for comment in trick.comments %}
+    <div class="comment">
+      <div class="row">
+        <div class="col-3">
+          {{comment.user.username }} (<small>{{ comment.commentedAt() | date('d/m/Y à H:i')}}</small>)
+        </div>
+        <div class="col">
+          {{comment.content | raw}}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
   </section>
 {% endblock %}

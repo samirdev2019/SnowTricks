@@ -1,4 +1,15 @@
 {% extends 'base.html.twig' %}
+{% form_theme formTrick 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-<h1>creation d'une figure</h1>
+
+{{ form_start(formTrick) }}
+
+{{ form_row(formTrick.name,{'attr':{'placeholder':'trick\'s name'}}) }}
+{{ form_row(formTrick.description,{'attr':{'placeholder':'snowtrick\'s description'}}) }}
+{{ form_row(formTrick.category)}}
+{# manque illustrations (plusieurs images pour une seule snowtrick) #}
+{# manque videos "  plusieurs védios pour une seule snowtrick#}
+<button type="submit" class="btn btn-success">Save</button>
+
+{{form_end(formTrick)}}
 {% endblock %}

@@ -55,14 +55,14 @@ class Comment
         return $this->id;
     }
 
-    public function getContent(): ?text
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    public function getCmmentedAt(): \DateTimeInterface
+    public function getCommentedAt(): \DateTimeInterface
     {
-        return $this->commentedAT;
+        return $this->commentedAt;
     }
 
     public function getTrick(): ?Trick

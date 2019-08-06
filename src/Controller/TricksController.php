@@ -2,32 +2,41 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Forms;
 use App\Repository\TrickRepository;
 use App\Repository\IllustrationRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\VideoRepository;
 use App\Entity\Trick;
 use App\Entity\Illustration;
 use App\Entity\Category;
 use App\Entity\User;
+use App\Form\TrickType;
 
 class TricksController extends AbstractController 
 {
     private $tRepos;
     private $iRepos;
     private $vRepos;
+    private $cRepos;
 
     public function __construct(
         TrickRepository $tRepos,
         IllustrationRepository $iRepos,
-        VideoRepository $vRepos
+        VideoRepository $vRepos,
+        CategoryRepository $cRepos
         )
     {
         $this->tRepos = $tRepos;
         $this->iRepos = $iRepos;
         $this->vRepos = $vRepos;
+        $this->cRepos = $cRepos;
 
     }
     /**
@@ -58,13 +67,15 @@ class TricksController extends AbstractController
         $image = $this->iRepos->findOneByTrick($id);
         $illustrations = $this->iRepos->findByTrick($id);
         $videos = $this->vRepos->findByTrick($id);
+        //$category = $this->cRepos->findOneByTrick($id);
         return $this->render(
             'tricks/detailtrick.html.twig',
             [
                 'trick' => $trick,
                 'image' => $image,
                 'illustrations' => $illustrations,
-                'videos' => $videos
+                'videos' => $videos,
+                
 
             ]
         );
@@ -83,11 +94,28 @@ class TricksController extends AbstractController
     /**
      *
      * @return Response
-     * @Route("/snowtriks/new-trick", name="new_trick")
+     * @Route("/new-trick", name="new_trick")
      */
-    public function addNewTrick():Response
+    public function formTrick(Request $req, ObjectManager $manager)
     {
-        return $this->render('newtrick.html.twig');
+        
+        $trick = new Trick();
+        $form = $this->createForm(TrickType::class,$trick);
+        
+        // $form->handleRequest($req);
+        
+        // if($form->isSubmitted() && $form->isValid()) {
+        //     $trick->setCreatedAt(new \DateTime());
+        //     $trick->setUpdatedAt(new \DateTime());
+        // }
+        // $manager->persist($trick);
+        // $manager->flush();
+        return $this->render(
+            'tricks/newtrick.html.twig',['formTrick' => $form->createView()
+            ]
+        );
+        
+        
     }
     
 }

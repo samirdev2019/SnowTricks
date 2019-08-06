@@ -2,11 +2,12 @@
 
 {% block title %}Home{% endblock %}
 {% block body %}
-<section class="mb-5 bg-primary style="height:100%">
+<section class="mb-5 bg-primary">
+  
   <div class="col-sm-12 col-md-12 mx-auto">
     <img class="d-block img-fluid col-12 z-index-1" src="http://placehold.it/960x450" alt="">
     <div class="mb-3 d-flex justify-content-end z-index-2">
-      <div class="btn btn-primary">voir les figure </div>
+      <div class="btn btn-primary"><i class="fas fa-arrow-alt-circle-down"></i></div>
     </div>
   </div>
 
@@ -15,12 +16,18 @@
 <section class="row d-flex flex-row justify-content-between mt-5" id="tricks">
   {% for trick in tricks %}
   <div class="card col-xm-12 col-md-6 col-lg-4 my-2 p-3">
+    <header class="bg-danger text-right">
+      <a class="mx-1" href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+      <a class="mx-1" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    
+  </header>
     <img class="card-img-top" src="{{ firstImg.url }}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{ trick.name }}</h5>
       <p 
         class="card-text">{{ trick.description }}
         <a href="{{ path ('trick_detail',{id:trick.id})}}" class="ml-2">en savoir plus...</a>
+        
       </p>
     </div>
     <div class="footer">
