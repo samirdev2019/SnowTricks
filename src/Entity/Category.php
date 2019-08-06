@@ -64,11 +64,7 @@ class Category
      *
      * @return text|null
      */
-<<<<<<< HEAD
-    public function getDescription(): ?text
-=======
     public function getDescription(): ?string
->>>>>>> entities
     {
         return $this->getDescription;
     }

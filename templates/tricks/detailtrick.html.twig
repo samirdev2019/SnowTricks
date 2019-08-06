@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-<div class="card col-xm-12 col-md-6 col-lg-3">
-    <pre>
-  
-    {{ dump(trick) }}
-  
-</pre>
-    <img class="card-img-top" src="{{ img.url }}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{ trick.name }}</h5>
-      <p class="card-text">{{ trick.description }}</p>
-      <a href="{{ path ('trick_detail',{id:trick.id})}}" class="btn btn-primary">en savoir moins</a>
-=======
 {% extends 'base.html.twig' %}
 {% block title %}Tricks-detail{% endblock %}
 {% block body %}
@@ -55,7 +42,6 @@
   <section class="row">
     <div class="d-block mt-5 mb-5 p-4">
       <p>{{ trick.description }}</p>
->>>>>>> entities
     </div>
     <div class="row d-flex bg-info">
       <span>{{trick.createdAt | date('d/m/Y')}}&nbsp;&nbsp;{{trick.createdAt | date('H:i')}}</span>

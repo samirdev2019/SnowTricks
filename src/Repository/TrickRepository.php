@@ -18,28 +18,6 @@ class TrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Trick::class);
     }
-<<<<<<< HEAD
-    /**
-     * Undocumented function
-     *
-     * @param [int] $cat
-     * @return Trick
-     */
-    public function findAllInCategory($cat):array
-    {
-        return $this->createQueryBuilder('p')
-            ->where('p.category = :val')
-            ->setParameter('val',$cat)
-            ->orderBy('p.id', 'DESC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-
-    }
-=======
-
->>>>>>> entities
     // /**
     //  * @return Trick[] Returns an array of Trick objects
     //  */

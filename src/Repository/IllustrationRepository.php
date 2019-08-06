@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-=======
-
->>>>>>> entities
 namespace App\Repository;
 
 use App\Entity\Illustration;
@@ -21,8 +17,6 @@ class IllustrationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Illustration::class);
     }
-<<<<<<< HEAD
-=======
 
     // /**
     //  * @return Illustration[] Returns an array of Illustration objects
@@ -52,5 +46,4 @@ class IllustrationRepository extends ServiceEntityRepository
         ;
     }
     */
->>>>>>> entities
 }

@@ -79,11 +79,7 @@ class Comment
     //                  SETTERS                           // 
     ////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
-    public function setContent(text $content): self
-=======
     public function setContent(string $content): self
->>>>>>> entities
     {
         $this->content = $content;
         return $this;

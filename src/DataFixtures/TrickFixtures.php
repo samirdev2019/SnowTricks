@@ -19,11 +19,7 @@ class TrickFixtures extends Fixture
 
         $category = new Category();
         $category->setName($faker->sentence());
-<<<<<<< HEAD
-        $category->setDescription($faker->paragraph());
-=======
         $category->setDescription($faker->realText($maxNbChars = 200, $indexSize = 2));
->>>>>>> entities
 
         $manager->persist($category);
 

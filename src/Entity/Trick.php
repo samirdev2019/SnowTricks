@@ -188,11 +188,7 @@ class Trick
      * @param text $description
      * @return self
      */
-<<<<<<< HEAD
-    public function setDescription(text $description):self
-=======
     public function setDescription(string $description):self
->>>>>>> entities
     {
          $this->description = $description;
          return $this;
@@ -243,11 +239,7 @@ class Trick
      * @param Illustartion $image
      * @return self
      */
-<<<<<<< HEAD
-    public function addIllustration(Illustartion $image): self
-=======
     public function addIllustration(Illustration $image): self
->>>>>>> entities
     {
         if(!$this->illustrations->contains($image)) {
             $this->illustrations[] = $image;
