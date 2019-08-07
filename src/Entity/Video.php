@@ -41,7 +41,7 @@ class Video
      *
      * @return integer|null
      */
-    public function getId(): ?integer
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -94,9 +94,13 @@ class Video
      * @param Trick|null $trick
      * @return self
      */
-    public function setTrick(?Trick $trick):self
+    public function setTrick(?Trick $trick):self //y a pas dans l'exo
     {
         $this->trick = $trick;
         return $this;
     }
+    // public function __toString()
+    // {
+    //     return $this->url;
+    // }
 }

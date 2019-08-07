@@ -42,7 +42,7 @@ class Illustration
      *
      * @return integer|null
      */
-    public function getId(): ?integer
+    public function getId(): ?int
     {
         return $this->id;
     }

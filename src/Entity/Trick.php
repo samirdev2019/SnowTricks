@@ -4,6 +4,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
  * @ORM\Table(name="tricks")
@@ -40,19 +42,23 @@ class Trick
     private $updatedAt;
     /**
      * The trick can have more illustrations(images) and its delete leads to delete all of its illustrations
-     * @ORM\OneToMany(targetEntity="App\Entity\Illustration", mappedBy="trick", orphanRemoval=true)
+     * 
+     * @ORM\OneToMany(targetEntity="App\Entity\Illustration", mappedBy="trick", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $illustrations;
     /**
      * The trick can have more videos and its removal leads to delete all these last. 
-     *@ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", orphanRemoval=true)
      * 
+     *@ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $videos;
     /**
      * The trick can have more comments of user and its removal leads to delete all of its comments
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $comments;
     /**
@@ -320,4 +326,8 @@ class Trick
             }
         }
     }
+    // public function __toString()
+    // {
+    //     return $this->name;
+    // }
 }

@@ -2,9 +2,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,11 +15,14 @@ use App\Repository\TrickRepository;
 use App\Repository\IllustrationRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\VideoRepository;
-use App\Entity\Trick;
+
 use App\Entity\Illustration;
 use App\Entity\Category;
 use App\Entity\User;
+use App\Entity\Trick;
+use App\Entity\Video;
 use App\Form\TrickType;
+
 
 class TricksController extends AbstractController 
 {
@@ -96,20 +101,40 @@ class TricksController extends AbstractController
      * @return Response
      * @Route("/new-trick", name="new_trick")
      */
-    public function formTrick(Request $req, ObjectManager $manager)
+    public function formTrick( Request $request, ObjectManager $manager)
     {
-        
-        $trick = new Trick();
+            $trick = new Trick();
+            $image = new Illustration();
+            $video = new Video();
+            $trick->addIllustration($image);
+            $trick->addVideo($video);
+        // $image1->setUrl('url1');
+        // $image1->setTrick($trick);
+        // $image2 = new Illustration();
+        // $image2->setUrl('url2');
+        // $image2->setTrick($trick);
+        // $trick->getIllustrations()->add($image1);
+        // $trick->getIllustrations()->add($image2);
+        // dump($trick);   
         $form = $this->createForm(TrickType::class,$trick);
+       
+        $form->handleRequest($request);
+        if($request->request->count() > 0) {
+            $datas = new Illustration();
+            $datas = $request->request->get('illustrations');
+            
+            
+        dump($datas);
+        }
+        if($form->isSubmitted() && $form->isValid()) {
+            
+            $trick->setCreatedAt(new \DateTime());
+            $trick->setUpdatedAt(new \DateTime()); 
+            $manager->persist($trick);
+            
+            $manager->flush();  
+        }
         
-        // $form->handleRequest($req);
-        
-        // if($form->isSubmitted() && $form->isValid()) {
-        //     $trick->setCreatedAt(new \DateTime());
-        //     $trick->setUpdatedAt(new \DateTime());
-        // }
-        // $manager->persist($trick);
-        // $manager->flush();
         return $this->render(
             'tricks/newtrick.html.twig',['formTrick' => $form->createView()
             ]
