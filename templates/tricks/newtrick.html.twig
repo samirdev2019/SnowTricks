@@ -9,9 +9,10 @@
 
 {% block body %}
     <div class="container">
+        {{ form_start(formTrick) }}
         <div class="row mx-auto">
             <div class="col-md-8">
-                {{ form_start(formTrick) }}
+                
                 {{ form_row(formTrick.name,{'attr':{'placeholder':'trick\'s name'}}) }}
                 {{ form_row(formTrick.description,{'attr':{'placeholder':'snowtrick\'s description'}}) }}
                 {{ form_row(formTrick.category)}}
@@ -21,11 +22,11 @@
         <div class="row mx-auto mb-5">
             <div class="col-md-4">
                 <h3>Videos</h3>
-                {% include 'tricks/add-vedio.html.twig' %}
+                {% include 'tricks/_add-vedio.html.twig' %}
             </div>
             <div class="col-md-4">
                 <h3>Illustration</h3>
-                {% include 'tricks/add-illustration.html.twig' %}
+                {% include 'tricks/_add-illustration.html.twig' %}
             </div>
         </div>
         <div class="row mb-4">

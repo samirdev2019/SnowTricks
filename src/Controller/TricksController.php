@@ -103,29 +103,9 @@ class TricksController extends AbstractController
      */
     public function formTrick( Request $request, ObjectManager $manager)
     {
-            $trick = new Trick();
-            $image = new Illustration();
-            $video = new Video();
-            $trick->addIllustration($image);
-            $trick->addVideo($video);
-        // $image1->setUrl('url1');
-        // $image1->setTrick($trick);
-        // $image2 = new Illustration();
-        // $image2->setUrl('url2');
-        // $image2->setTrick($trick);
-        // $trick->getIllustrations()->add($image1);
-        // $trick->getIllustrations()->add($image2);
-        // dump($trick);   
+        $trick = new Trick();
         $form = $this->createForm(TrickType::class,$trick);
-       
-        $form->handleRequest($request);
-        if($request->request->count() > 0) {
-            $datas = new Illustration();
-            $datas = $request->request->get('illustrations');
-            
-            
-        dump($datas);
-        }
+        $form->handleRequest($request); 
         if($form->isSubmitted() && $form->isValid()) {
             
             $trick->setCreatedAt(new \DateTime());
