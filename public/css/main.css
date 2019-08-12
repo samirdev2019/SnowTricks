@@ -86,4 +86,11 @@ header.masthead {
 	-moz-box-shadow:-1px 9px 40px -12px rgba(0,0,0,0.75);
 	box-shadow:-1px 9px 40px -12px rgba(0,0,0,0.75);
 }
-    
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width: 6%;
+  height: auto;
+}
