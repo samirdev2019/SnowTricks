@@ -35,9 +35,11 @@
       <li class="nav-item mr-2">
         <a class="nav-link {% if curent_menu is defined and curent_menu == 'login' %} active {% endif %}" href="{{ path ('login')}}">Sign in</a>
       </li>
+      {% if is_granted('ROLE_USER')%}
       <li class="nav-item mr-2">
-        <a class="nav-link {% if curent_menu is defined and curent_menu == 'logout' %} active {% endif %}" href="#">Sign up</a>
+        <a class="nav-link {% if curent_menu is defined and curent_menu == 'logout' %} active {% endif %}" href="{{path('app_logout')}}">Sign up</a>
       </li>
+      {% endif %}
       </ul>
     </div>
   

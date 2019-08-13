@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+{% block body %}
+    <div class="row w-100 mh-100 d-flex justify-content-center align-items-center" style="height: 32rem;">
+        <div class="col-sm-5">
+            <div class="well">
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey| trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %} 
+                <form action="{{ path('login')}}" method="post" style="
+                background-color: #eaeaec;
+            ">
+                    <fieldset class="p-5">
+                        <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'login'|trans }}</legend>
+                        <div class="form-group">
+                            <label for="username">{{ 'Username'|trans }}</label>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{ 'Password'|trans }}</label>
+                            <input type="password" id="password" name="_password" class="form-control" />
+                        </div>
+                        <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                        <p class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary col-6">
+                                <i class="fa fa-sign-in mr-2" aria-hidden="true"></i> {{ 'sign in'|trans }}
+                            </button>
+                        </p>
+                        
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

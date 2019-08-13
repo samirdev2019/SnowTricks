@@ -29,12 +29,14 @@
   <div class="card box-hidden col-xm-12 col-md-6 col-lg-4 my-2 p-3">
     
     <header class="bg-light text-right ">
+      {% if is_granted('ROLE_USER')%}
       <a class="mx-1" href="#">
         <i aria-hidden="true" class="fa fa-trash"></i>
       </a>
       <a class="mx-1" href="#">
         <i aria-hidden="true" class="fa fa-pencil"></i>
       </a>
+      {% endif %}
     </header>
     
     <a href="{{ path ('trick_detail',{id:trick.id})}}">
@@ -42,8 +44,8 @@
     </a>
     
     <div class="card-body">
-      <h5 class="card-title bold">{{ trick.name }}</h5>
-      <p class="card-text">{{ trick.description }}
+      <h5 class="card-title bold">{{ trick.name| raw }}</h5>
+      <p class="card-text">{{ trick.description| raw}}
         <a href="{{ path ('trick_detail',{id:trick.id})}}" class="ml-2">
           <p>see more</p>
         </a>

@@ -49,7 +49,8 @@ class TricksController extends AbstractController
      */
     public function index():Response
     {
-
+        //$user =$this->getUser()->getUsername();
+        
         $firstImag = $this->iRepos->findOneBy(['id'=>'1']);
         $tricks = $this->tRepos->findAll();
         return $this->render(
@@ -57,7 +58,8 @@ class TricksController extends AbstractController
             'tricks/home.html.twig',
             [
                 'tricks' => $tricks,
-                'firstImg'=> $firstImag
+                'firstImg'=> $firstImag,
+                //'user' => $user,
             ]
         );
 
@@ -85,17 +87,7 @@ class TricksController extends AbstractController
             ]
         );
     }
-    /**
-     * Login Page
-     * @Route("/login",name="login")
-     */
-    public function loginUser()
-    {
-        return $this->render(
-            'user/login.html.twig',
-            ['curent_menu' => 'login']
-        );
-    }
+    
     /**
      *
      * @return Response

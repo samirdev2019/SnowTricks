@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\Category;
@@ -13,6 +14,11 @@ use App\Entity\Video;
 
 class TrickFixtures extends Fixture
 {
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create();
@@ -26,18 +32,21 @@ class TrickFixtures extends Fixture
         $user = new User();
         $user->setUsername($faker->userName());
         $user->setEmail($faker->email());
-        $user->setPassword($faker->password());
+        $user->setPassword($this->encoder->encodePassword($user,'demo'));
         $user->setToken($faker->md5());
         $user->setIsValidated($faker->boolean());
         $user->setAvatar($faker->imageUrl());
         $user->setSubscribedAT($faker->dateTime());
+        $user->setRoles(['ROLE_USER']);
         $manager->persist($user);
         for($i = 1; $i <=10; $i++) {
             $trick = new Trick();
             $trick->setUser($user);
             $trick->setCategory($category);
             $trick->setName($faker->sentence());
-            $trick->setDescription($faker->paragraph());
+            $content = '<p>'.join($faker->paragraphs(3),'</p><p>').'</p><p>';
+
+            $trick->setDescription($content);
             $trick->setCreatedAt($faker->dateTime());
             $trick->setUpdatedAt($faker->dateTime());
             
@@ -47,8 +56,7 @@ class TrickFixtures extends Fixture
                 $comment = new Comment();
                 $comment->setTrick($trick);
                 $comment->setUser($user);
-                $content = '<p>'.join($faker->paragraphs(3),'</p><p>').'</p><p>';
-                $comment->setContent($content);
+                $comment->setContent($faker->paragraph());
                 $comment->setCommentedAt($faker->dateTime());
                 
                 $manager->persist($comment);

@@ -4,11 +4,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
-class User
+class User implements UserInterface
 {
     /**
      * The user identifier 
@@ -33,6 +34,11 @@ class User
      *@ORM\Column(type="string", length=255)
      */
     private $password;
+    /**
+     *
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
     /**
      * token that will be sent to the user for validate his acount
      * 
@@ -117,6 +123,19 @@ class User
         return $this->password;
     }
     /**
+     * Function return an table of roles
+     *
+     * @return array|null
+     */
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+        if(empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        return array_unique($roles);
+    }
+    /**
      *
      * @return string|null
      */
@@ -185,6 +204,12 @@ class User
     {
         $this->password = $password;
         return $this;
+    }
+    public function setRoles(array $roles):self
+    {
+        $this->roles = $roles;
+        return $this;
+        //on peut faire return ['ROLE_ADMIN']; si on interesse pas par la gestion des roles
     }
     /**
      *
@@ -308,5 +333,30 @@ class User
     public function __toString()
     {
         return $this->name;
+    }
+    /**
+     * This function return null , we are note interessted by an encodage system
+     *function of interface user
+     * @return string|null
+     */
+    public function getSalt(): ?string
+    {
+        return null; 
+    }
+    /**
+     * methode of UserInterface
+     *
+     * @return void
+     */
+    public function eraseCredentials(): void
+    {
+    }
+    public function serialize()
+    {
+
+    }
+    public function unserializa($serialized)
+    {
+
     }
 }
