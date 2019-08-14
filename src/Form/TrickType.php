@@ -32,11 +32,11 @@ class TrickType extends AbstractType
             'class'=>Category::class,
             'choice_label'=>'name'
             ])
-            ->add('user',EntityType::class,
-            [
-                'class'=>User::class,
-                'choice_label'=>'username'
-            ])
+            // ->add('user',EntityType::class,
+            // [
+            //     'class'=>User::class,
+            //     'choice_label'=>'username'
+            // ])
             ->add('name',TextType::class)
             ->add('description',TextareaType::class)
             ->add('videos', CollectionType::class,

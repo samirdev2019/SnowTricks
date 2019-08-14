@@ -5,9 +5,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
+ * @UniqueEntity(
+ * fields={"username"},
+ * message="The username you have indicated is already in use !"
+ * )
  */
 class User implements UserInterface
 {
@@ -22,16 +28,19 @@ class User implements UserInterface
     /**
      * 
      *@ORM\Column(type="string", length=255)
+     *@Assert\NotBlank
      */
     private $username;
     /**
      * 
      *@ORM\Column(type="string", length=255)
+     *@Assert\Email(message="The email '{{value}}' is not a valid email", checkMX = true)
      */
     private $email;
     /**
      * 
      *@ORM\Column(type="string", length=255)
+     *@Assert\Length(min="5", minMessage="your password must be 5 characters")
      */
     private $password;
     /**
@@ -66,6 +75,7 @@ class User implements UserInterface
      * This attribut will be used just for the password confirmation
      *
      * @var [string]
+     * @Assert\EqualTo(propertyPath="password", message="you did't enter the same password" )
      */
     private $confirmation;
     /**
@@ -125,15 +135,17 @@ class User implements UserInterface
     /**
      * Function return an table of roles
      *
-     * @return array|null
+     * @return array
      */
-    public function getRoles(): ?array
+    public function getRoles(): array
     {
         return $this->roles;
         if(empty($roles)) {
             $roles[] = 'ROLE_USER';
         }
         return array_unique($roles);
+        // s'il n y a pas de gestion de role je peu mettre ici directement 
+        // return ['ROLE_USER'];
     }
     /**
      *
