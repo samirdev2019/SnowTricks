@@ -4,11 +4,18 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
+ * @UniqueEntity(
+ * fields={"username"},
+ * message="The username you have indicated is already in use !"
+ * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * The user identifier 
@@ -21,18 +28,26 @@ class User
     /**
      * 
      *@ORM\Column(type="string", length=255)
+     *@Assert\NotBlank
      */
     private $username;
     /**
      * 
      *@ORM\Column(type="string", length=255)
+     *@Assert\Email(message="The email '{{value}}' is not a valid email", checkMX = true)
      */
     private $email;
     /**
      * 
      *@ORM\Column(type="string", length=255)
+     *@Assert\Length(min="5", minMessage="your password must be 5 characters")
      */
     private $password;
+    /**
+     *
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
     /**
      * token that will be sent to the user for validate his acount
      * 
@@ -60,6 +75,7 @@ class User
      * This attribut will be used just for the password confirmation
      *
      * @var [string]
+     * @Assert\EqualTo(propertyPath="password", message="you did't enter the same password" )
      */
     private $confirmation;
     /**
@@ -115,6 +131,21 @@ class User
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+    /**
+     * Function return an table of roles
+     *
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+        if(empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        return array_unique($roles);
+        // s'il n y a pas de gestion de role je peu mettre ici directement 
+        // return ['ROLE_USER'];
     }
     /**
      *
@@ -185,6 +216,12 @@ class User
     {
         $this->password = $password;
         return $this;
+    }
+    public function setRoles(array $roles):self
+    {
+        $this->roles = $roles;
+        return $this;
+        //on peut faire return ['ROLE_ADMIN']; si on interesse pas par la gestion des roles
     }
     /**
      *
@@ -305,4 +342,33 @@ class User
 
         return $this;
     }  
+    public function __toString()
+    {
+        return $this->name;
+    }
+    /**
+     * This function return null , we are note interessted by an encodage system
+     *function of interface user
+     * @return string|null
+     */
+    public function getSalt(): ?string
+    {
+        return null; 
+    }
+    /**
+     * methode of UserInterface
+     *
+     * @return void
+     */
+    public function eraseCredentials(): void
+    {
+    }
+    public function serialize()
+    {
+
+    }
+    public function unserializa($serialized)
+    {
+
+    }
 }

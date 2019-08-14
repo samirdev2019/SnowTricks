@@ -1,0 +1,96 @@
+bady{
+    width: 100;
+    height: 100%;
+    background-color: blue;
+    margin: 4rem;
+}
+section .box-hidden{
+  display: none;
+}
+
+
+.lolo{
+    text-align: center;
+    color: blue;
+    background-color: brown;
+    margin-right: 4rem;
+    background-image: image-set('imgs/img2.jpg');
+}
+header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 72px);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(92, 77, 66, 0.8)), to(rgba(92, 77, 66, 0.8))), url("../img/bg-masthead.jpg");
+    background: linear-gradient(to bottom, rgba(115, 146, 246, 0.459) 0%, rgba(238, 239, 243, 0.253) 100%), url("../imgs/img2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+  
+  header.masthead h1 {
+    font-size: 2.25rem;
+  }
+  
+  @media (min-width: 992px) {
+    header.masthead {
+      height: 100vh;
+      min-height: 40rem;
+      padding-top: 72px;
+      padding-bottom: 0;
+    }
+    header.masthead p {
+      font-size: 1.15rem;
+    }
+    header.masthead h1 {
+      font-size: 3rem;
+    }
+    .col-lg-4 {
+        -webkit-box-flex: 0;
+        -ms-flex:(0 0 33.3333333333%);
+        flex: 0 0 33.3333333333%;
+        max-width: 32%;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    header.masthead h1 {
+      font-size: 3.5rem;
+    }
+    .col-lg-4 {
+        -webkit-box-flex: 0;
+        -ms-flex:(0 0 33.3333333333%);
+        flex: 0 0 33.3333333333%;
+        max-width: 32%;
+    }
+  }
+  @media (min-width: 992px) {
+    .col-lg-4 {
+        -webkit-box-flex: 0;
+        -ms-flex:(0 0 33.3333333333%);
+        flex: 0 0 33.3333333333%;
+        max-width: 32%;
+    }
+    .col-lg-6 {
+        -webkit-box-flex: 0;
+        -ms-flex:(0 0 33.3333333333%);
+        flex: 0 0 33.3333333333%;
+        max-width: 32%;
+    }
+      
+  }
+  .card{
+    border-radius: 45px;
+  }
+  .card:hover{
+	-webkit-box-shadow:-1px 9px 40px -12px rgba(0,0,0,0.75);
+	-moz-box-shadow:-1px 9px 40px -12px rgba(0,0,0,0.75);
+	box-shadow:-1px 9px 40px -12px rgba(0,0,0,0.75);
+}
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width: 6%;
+  height: auto;
+}

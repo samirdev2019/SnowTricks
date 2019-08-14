@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% form_theme formTrick 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(formTrick) }}
+        <div class="row mx-auto">
+            <div class="col-md-8">
+                
+                {{ form_row(formTrick.name,{'attr':{'placeholder':'trick\'s name'}}) }}
+                {{ form_row(formTrick.description,{'attr':{'placeholder':'snowtrick\'s description'}}) }}
+                {{ form_row(formTrick.category)}}
+                
+            </div>
+        </div>
+        <div class="row mx-auto mb-5">
+            <div class="col-md-4">
+                <h3>Videos</h3>
+                {% include 'tricks/_add-vedio.html.twig' %}
+            </div>
+            <div class="col-md-4">
+                <h3>Illustration</h3>
+                {% include 'tricks/_add-illustration.html.twig' %}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <button class="col-md-6" type="submit" class="btn btn-primary" name="btn">Save</button>
+        </div>
+        {{form_end(formTrick)}}
+    </div>
+{% endblock %} 
+
+
+
+{% block javascripts %}
+{{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/addvideo.js') }}"></script>
+{% endblock %}

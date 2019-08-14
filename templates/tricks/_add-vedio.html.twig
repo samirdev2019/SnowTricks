@@ -1,0 +1,16 @@
+<ul class="list_ul" id="video-fields-list"
+    data-prototype="{{ form_widget(formTrick.videos.vars.prototype)|e}}"
+    data-widget-tags="{{ '<li></li>'|e }}">
+
+    {% for video in formTrick.videos %}
+        <li style="list-style-type: none">
+            {{ form_errors(video) }}
+            {{ form_widget(video) }}
+        </li>
+    {% endfor %}
+</ul>
+<div class="col-sm-7">
+    <a href="#" class=" btn btn-info add-another-collection-widget_video"
+       data-list="#video-fields-list">add a video</a>
+</div>
+

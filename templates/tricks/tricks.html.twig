@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
-
+{% block styleshets %}
+{{ parent() }}
+<link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block title %}Tricks{% endblock %}
 {% block body %}
 <section>
