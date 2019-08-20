@@ -9,6 +9,11 @@
                     <div class="alert alert-danger">
                         {{ error.messageKey| trans(error.messageData, 'security') }}
                     </div>
+                {% endif %}
+                {% if message %}
+                <div class="alert alert-{{type}}">
+                    {{ message }}
+                </div>
                 {% endif %} 
                 <form action="{{ path('login')}}" method="post" style="
                 background-color: #eaeaec;
@@ -29,6 +34,8 @@
                             <button type="submit" class="btn btn-primary col-6">
                                 <i class="fa fa-sign-in mr-2" aria-hidden="true"></i> {{ 'sign in'|trans }}
                             </button>
+                            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                            <label for="remember_me">Keep me logged in</label>
                         </p>
                         
                     </fieldset>

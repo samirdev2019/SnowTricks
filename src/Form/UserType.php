@@ -19,10 +19,6 @@ class UserType extends AbstractType
             ->add('email')
             ->add('password',PasswordType::class)
             ->add('confirmation',PasswordType::class)
-            //->add('token')
-            //->add('isValidated')
-            //->add('avatar')
-            //->add('subscribedAT')
         ;
     }
 

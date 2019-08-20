@@ -139,13 +139,12 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
+        
         return $this->roles;
         if(empty($roles)) {
             $roles[] = 'ROLE_USER';
         }
         return array_unique($roles);
-        // s'il n y a pas de gestion de role je peu mettre ici directement 
-        // return ['ROLE_USER'];
     }
     /**
      *
@@ -370,5 +369,5 @@ class User implements UserInterface
     public function unserializa($serialized)
     {
 
-    }
+    } 
 }
