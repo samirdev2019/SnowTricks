@@ -134,5 +134,22 @@ class TricksController extends AbstractController
         
         
     }
+    /**
+     *
+     *@Route("/snowtrick/{id}/edit", name="edit_trick")
+     */
+    public function editTrick()
+    {
+        //todo...
+    }
+    /**
+     * Undocumented function
+     *
+     * @Route("/delete", name="delete_trick")
+     */
+    public function deleteTrick()
+    {
+        //todo...
+    }
     
 }

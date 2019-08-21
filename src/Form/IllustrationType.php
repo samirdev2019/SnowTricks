@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 
 class IllustrationType extends AbstractType
@@ -15,7 +17,7 @@ class IllustrationType extends AbstractType
     {
         $builder
             //->add('name')
-            ->add('file',FileType::class,
+            ->add('file',TextType::class,
             [
                 'label'=> 'select an image',
                 'required'=>false,
