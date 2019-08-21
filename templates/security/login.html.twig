@@ -30,14 +30,17 @@
                         </div>
                         <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-                        <p class="d-flex justify-content-center">
+                        <p class="d-flex justify-content-between">
+                            <label for="remember_me">
+                            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                            remember me</label>
                             <button type="submit" class="btn btn-primary col-6">
                                 <i class="fa fa-sign-in mr-2" aria-hidden="true"></i> {{ 'sign in'|trans }}
-                            </button>
-                            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
-                            <label for="remember_me">Keep me logged in</label>
+                            </button>     
                         </p>
-                        
+                        <p>
+                            <a href="{{path('forgot_password')}}">Forgot password ?</a>
+                        </p>
                     </fieldset>
                 </form>
             </div>

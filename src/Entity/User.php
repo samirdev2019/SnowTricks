@@ -369,5 +369,9 @@ class User implements UserInterface
     public function unserializa($serialized)
     {
 
+    }
+    public function createResetToken()
+    {
+        return md5($this->getUsername().$this->getEmail());
     } 
 }
