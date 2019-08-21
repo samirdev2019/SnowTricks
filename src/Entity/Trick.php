@@ -5,10 +5,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
  * @ORM\Table(name="tricks")
+ * @UniqueEntity(
+ * fields={"name"},
+ * message="The name you have indicated is already in use !"
+ * )
  * 
  */
 class Trick

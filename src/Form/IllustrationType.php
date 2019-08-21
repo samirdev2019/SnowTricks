@@ -17,7 +17,7 @@ class IllustrationType extends AbstractType
     {
         $builder
             //->add('name')
-            ->add('file',TextType::class,
+            ->add('url',TextType::class,
             [
                 'label'=> 'select an image',
                 'required'=>false,

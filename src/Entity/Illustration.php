@@ -62,9 +62,9 @@ class Illustration
     }
     /**
      *
-     * 
+     * @return string|null
      */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -88,10 +88,10 @@ class Illustration
     }
     /**
      *
-     * @param mixed $url
+     * @param string $url
      * @return self
      */
-    public function setUrl($url)
+    public function setUrl(string $url): self
     {
         $this->url = $url;
         return $this;

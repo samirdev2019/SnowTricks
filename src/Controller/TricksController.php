@@ -32,18 +32,21 @@ class TricksController extends AbstractController
     private $iRepos;
     private $vRepos;
     private $cRepos;
+    private $manager;
 
     public function __construct(
         TrickRepository $tRepos,
         IllustrationRepository $iRepos,
         VideoRepository $vRepos,
-        CategoryRepository $cRepos
+        CategoryRepository $cRepos,
+        ObjectManager $manager
         )
     {
         $this->tRepos = $tRepos;
         $this->iRepos = $iRepos;
         $this->vRepos = $vRepos;
         $this->cRepos = $cRepos;
+        $this->manager = $manager;
 
     }
     /**
@@ -51,8 +54,6 @@ class TricksController extends AbstractController
      */
     public function index():Response
     {
-        
-        
         $firstImag = $this->iRepos->findOneBy(['id'=>'1']);
         $tricks = $this->tRepos->findAll();
         return $this->render(
@@ -70,7 +71,7 @@ class TricksController extends AbstractController
      *
      * @Route("/snowtricks/snowtrick/{id}", name="trick_detail")
      */
-    public function showTrick(Trick $trick, $id,Request $request,ObjectManager $em):Response
+    public function showTrick(Trick $trick, $id,Request $request):Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class,$comment);
@@ -79,8 +80,8 @@ class TricksController extends AbstractController
             $comment->setCommentedAt(new \DateTime);
             $comment->setTrick($trick);
             $comment->setUser($this->getUser());
-            $em->persist($comment);
-            $em->flush();
+            $this->manager->persist($comment);
+            $this->manager->flush();
             return $this->redirectToRoute('trick_detail',['id' => $trick->getId()]);
         }
         $image = $this->iRepos->findOneByTrick($id);
@@ -106,7 +107,7 @@ class TricksController extends AbstractController
      * @Route("/new-trick", name="new_trick")
      * @IsGranted("ROLE_USER")
      */
-    public function formTrick( Request $request, ObjectManager $manager)
+    public function formTrick(Request $request)
     {
         $trick = new Trick();
         $image = new Illustration();
@@ -122,9 +123,9 @@ class TricksController extends AbstractController
             // dump($file);die();
             $trick->setCreatedAt(new \DateTime());
             $trick->setUser($this->getUser());
-            $manager->persist($trick);
+            $this->manager->persist($trick);
             
-            $manager->flush();  
+            $this->manager->flush();  
         }
         
         return $this->render(
@@ -135,21 +136,34 @@ class TricksController extends AbstractController
         
     }
     /**
-     *
-     *@Route("/snowtrick/{id}/edit", name="edit_trick")
+     * This method allow to edit a trick
+     * 
+     *@Route("/admin/snowtrick/{id}/edit", name="edit_trick", methods="GET|POST")
      */
-    public function editTrick()
+    public function editTrick(Trick $trick, Request $request):Response
     {
-        //todo...
+        $form = $this->createForm(TrickType::class,$trick);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $trick->setUpdatedAt(new \DateTime());
+            $this->manager->flush();
+            $this->redirectToRoute('trick_detail',['id'=>$trick->getId()]);
+        }
+        return $this->render(
+            'tricks/new-trick.html.twig',['formTrick' => $form->createView()
+            ]
+        );
     }
     /**
-     * Undocumented function
+     * This method allow to delete a trick 
      *
-     * @Route("/delete", name="delete_trick")
+     * @Route("/admin/snowtrick/{id}/delete", name="delete_trick")
      */
-    public function deleteTrick()
+    public function deleteTrick(Trick $trick)
     {
-        //todo...
+        $this->manager->remove($trick);
+        $this->manager->flush();
+        return $this->redirectToRoute('home');
     }
     
 }
