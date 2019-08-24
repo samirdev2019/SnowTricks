@@ -31,7 +31,7 @@ security:
                 lifetime: 604800 # 1 week in seconds
                 path:     /
                 
-            user_checker: App\Security\UserChecker
+            #user_checker: App\Security\UserChecker
                     
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

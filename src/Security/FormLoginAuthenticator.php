@@ -36,14 +36,15 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     }
     public function supports(Request $request)
     {
-        return 'security_login' === $request->attributes->get('_route')
+        
+        return 'login' === $request->attributes->get('_route')
         && $request->isMethod('POST');
     }
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'username' => $request->request->get('username'),
-            'password' =>$request->request->get('password'),
+            'username' => $request->request->get('_username'),
+            'password' =>$request->request->get('_password'),
             'csrf_token' =>$request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -54,7 +55,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     }
     public function getUser($credentials, UserProviderInterface $userProviderInterface )
     {
-        $token = new CsfrToken('authenticate', $credentials['csrf_token']);
+        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if(!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
@@ -63,14 +64,17 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
         if(!$user) {
             throw new CustomUserMessageAuthenticationException('user could not be found !');
         }
-
+        
+        return $user;
     }
     public function checkCredentials($credentials, UserInterface $user)
-    {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+    {   
+        
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']) && $user->getIsValidated();
     }
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        
         if($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
@@ -78,6 +82,6 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     }
     protected function getLoginUrl()
     {
-        return $this->router->generate('security_login');
+        return $this->router->generate('login');
     }
 }

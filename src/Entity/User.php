@@ -364,7 +364,7 @@ class User implements UserInterface
     }
     public function serialize()
     {
-
+        
     }
     public function unserializa($serialized)
     {
