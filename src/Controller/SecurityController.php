@@ -57,10 +57,11 @@ class SecurityController extends AbstractController
             $user->setIsValidated(false);
             $data = $request->request->get('user');
             $user->setToken($data['_token']);
-            $user->setAvatar('lmdscmlslm');
+            $user->setAvatar('avatarDefault.png');
             $user->setRoles(['ROLE_USER']);
             $this->manager->persist($user);
             $this->manager->flush();
+            
             $subject ='Thanks for registration!';
             $template = 'emails/registration.html.twig';
             $this->sendEmail($user, $template , $subject);
@@ -225,4 +226,5 @@ class SecurityController extends AbstractController
         }
         return $this->render('security/reset-password.html.twig',['form'=>$form->createView()]);
     }
+    
 }

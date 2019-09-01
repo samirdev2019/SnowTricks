@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}edit video {% endblock %}
+{% block body %}
+
+<div class="row w-100 mh-100 d-flex justify-content-center align-items-center" style="height: 32rem;">
+    <div class="col-sm-5">
+        <div class="well">
+            {{form_start(formVideo)}}
+            {{ form_row(formVideo.url,{'attr':{'placeholder':'select an image...'}})}}
+            <button type="submit" class="btn btn-primary col-6">update video</button>        
+            {{form_end(formVideo)}}
+        </div>
+    </div>
+</div>   
+{% endblock %}

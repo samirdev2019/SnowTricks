@@ -40,7 +40,11 @@
     </header>
     
     <a href="{{ path ('trick_detail',{id:trick.id})}}">
-      <img class="card-img-top" src="{{ firstImg.url }}" alt="Card image cap">
+      {% for key,illustration in trick.illustrations %}
+      {% if key == 0 %}
+        <img class="card-img-top" src="{{ asset ('imgs/tricks/' ~ illustration.url) }}" alt="image trick">
+      {% endif %}
+      {% endfor %}
     </a>
     
     <div class="card-body">

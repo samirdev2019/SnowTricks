@@ -30,6 +30,7 @@ class TrickType extends AbstractType
         $builder
             ->add('category',EntityType::class,[
             'class'=>Category::class,
+            //'class'=> 'App\Entity\Category',
             'choice_label'=>'name'
             ])
             
@@ -53,6 +54,8 @@ class TrickType extends AbstractType
                 'allow_add'=>true,
                 'prototype'=>true,
                 'required'=>false,
+                'mapped'=>true,
+                'allow_file_upload'=>true,
                 'by_reference'=> false,
                 'error_bubbling' => false,
             ])

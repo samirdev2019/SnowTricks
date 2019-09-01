@@ -20,32 +20,32 @@ use App\Entity\User;
 use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\TrickType;
+use App\Form\DescriptionType;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-
-
+// https://symfony.com/doc/current/translation.html
+// https://ngrok.com/download
 class TricksController extends AbstractController 
 {
-    private $tRepos;
-    private $iRepos;
-    private $vRepos;
-    private $cRepos;
+    private $trickRepository;
+    private $illustrationRepository;
+    private $videoRepository;
+    private $categoryRepository;
     private $manager;
 
     public function __construct(
-        TrickRepository $tRepos,
-        IllustrationRepository $iRepos,
-        VideoRepository $vRepos,
-        CategoryRepository $cRepos,
+        TrickRepository $trickRepository,
+        IllustrationRepository $illustrationRepository,
+        VideoRepository $videoRepository,
+        CategoryRepository $categoryRepository,
         ObjectManager $manager
         )
     {
-        $this->tRepos = $tRepos;
-        $this->iRepos = $iRepos;
-        $this->vRepos = $vRepos;
-        $this->cRepos = $cRepos;
+        $this->trickRepository = $trickRepository;
+        $this->illustrationRepository = $illustrationRepository;
+        $this->videoRepository = $videoRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->manager = $manager;
 
     }
@@ -54,48 +54,61 @@ class TricksController extends AbstractController
      */
     public function index():Response
     {
-        $firstImag = $this->iRepos->findOneBy(['id'=>'1']);
-        $tricks = $this->tRepos->findAll();
-        return $this->render(
-
-            'tricks/home.html.twig',
-            [
-                'tricks' => $tricks,
-                'firstImg'=> $firstImag,
-            ]
-        );
-
+        $tricks = $this->trickRepository->findAll();
+        return $this->render('tricks/home.html.twig',['tricks' => $tricks]);
     }
     /**
      * page detail trick
      *
-     * @Route("/snowtricks/snowtrick/{id}", name="trick_detail")
+     * @Route("/snowtrick/trick_detail/{id}", name="trick_detail")
+     * @Route("/snowtricks/edit_trick/{id}", name="edit_trick")
      */
     public function showTrick(Trick $trick, $id,Request $request):Response
     {
+        $route = $request->attributes->get('_route');
         $comment = new Comment();
         $form = $this->createForm(CommentType::class,$comment);
         $form->handleRequest($request);
+        $formDescription = $this->createForm(DescriptionType::class,$trick);
+        $formDescription->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $comment->setCommentedAt(new \DateTime);
             $comment->setTrick($trick);
             $comment->setUser($this->getUser());
             $this->manager->persist($comment);
             $this->manager->flush();
-            return $this->redirectToRoute('trick_detail',['id' => $trick->getId()]);
+            if ($route === 'trick_detail') {
+                return $this->redirectToRoute('trick_detail',['id' => $trick->getId()]);
+            } else {
+                return $this->redirectToRoute('edit_trick',['id' => $trick->getId()]);
+            }
         }
-        $image = $this->iRepos->findOneByTrick($id);
-        $illustrations = $this->iRepos->findByTrick($id);
-        $videos = $this->vRepos->findByTrick($id);
-        //$category = $this->cRepos->findOneByTrick($id);
+        if($formDescription->isSubmitted() && $formDescription->isValid()) {
+            $trick->setUpdatedAt(new \DateTime);
+            $this->manager->flush();
+            if ($route === 'trick_detail') {
+            return $this->redirectToRoute('trick_detail',['id' => $trick->getId()]);
+            } else {
+                return $this->redirectToRoute('edit_trick',['id' => $trick->getId()]);
+            }
+        }
+        $image = $this->illustrationRepository->findOneByTrick($id);
+        $illustrations = $this->illustrationRepository->findByTrick($id);
+        $videos = $this->videoRepository->findByTrick($id);
+        if ($route === 'trick_detail') {
+            $template = 'tricks/detail-trick.html.twig';
+        } else {
+            $template = 'tricks/edit-trick.html.twig';
+        }
         return $this->render(
-            'tricks/detail-trick.html.twig',
+            $template,
             [
                 'trick' => $trick,
                 'image' => $image,
                 'illustrations' => $illustrations,
                 'videos' => $videos,
                 'commentform' => $form->createView(),
+                'descriptionForm' => $formDescription->createView(),
 
             ]
         );
@@ -110,22 +123,36 @@ class TricksController extends AbstractController
     public function formTrick(Request $request)
     {
         $trick = new Trick();
-        $image = new Illustration();
         $form = $this->createForm(TrickType::class,$trick);
         $form->handleRequest($request);
 
          
         if($form->isSubmitted() && $form->isValid()) {
-            
-            // $file = $image->getFile();
-            // $fileName = md5(uniqid()).'.'. $file->gessExtension();
-            // $file-move($this->getParameter('upload-directory'), $fileName);
-            // dump($file);die();
+            $files = $form['illustrations']->getData();
+            $files = $request->files->get('trick')['illustrations'];
+
+            //dump($files);die;
+            foreach($files as $file)
+            {
+                $url = $file['url'];
+                $originalFilename = pathinfo($url->getClientOriginalName(), PATHINFO_FILENAME);
+                $illustration = new Illustration();
+                $fileName = md5(uniqid()).'.'.$url->guessExtension();
+                 $url->move($this->getParameter('PATH_TO_IMAGE'), $fileName);
+                 $illustration->setName($originalFilename);   
+                 $illustration->setUrl($fileName);
+                 $illustration->setTrick($trick);
+                 $illustrations[] = $illustration;   
+            }
+            $trick->setIllustration($illustrations);
             $trick->setCreatedAt(new \DateTime());
             $trick->setUser($this->getUser());
-            $this->manager->persist($trick);
             
-            $this->manager->flush();  
+            $this->manager->persist($trick);
+            $this->manager->flush();
+            
+            return $this->redirectToRoute('trick_detail',['id'=>$trick->getId()]);
+  
         }
         
         return $this->render(
@@ -138,7 +165,7 @@ class TricksController extends AbstractController
     /**
      * This method allow to edit a trick
      * 
-     *@Route("/admin/snowtrick/{id}/edit", name="edit_trick", methods="GET|POST")
+     *@Route("/admin/snowtrick/{id}/edit", name="trick_edit", methods="GET|POST")
      */
     public function editTrick(Trick $trick, Request $request):Response
     {

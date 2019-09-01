@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profile{% endblock %}
+{% block body %}
+<div class="row w-100 mh-100 d-flex justify-content-center align-items-center" style="height: 32rem;">
+    <div class="col-sm-5">
+        <div class="well">
+            {{form_start(form)}}
+            {{ form_row(form.avatar,{'attr':{'placeholder':'select your avatar...'}})}}
+            <button type="submit" class="btn btn-primary col-6">add avatar</button>        
+            {{form_end(form)}}
+        </div>
+    </div>
+</div>   
+{% endblock %}

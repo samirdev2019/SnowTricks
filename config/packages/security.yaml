@@ -30,9 +30,7 @@ security:
                 secret:   '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path:     /
-                
-            #user_checker: App\Security\UserChecker
-                    
+                                    
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -44,4 +42,4 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
          - {path: ^/home, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/member, roles: ROLE_USER }

@@ -258,6 +258,11 @@ class Trick
         }
         return $this;
     }
+    public function setIllustration($illustrations):self
+    {
+        $this->illustrations = $illustrations;
+        return $this;
+    }
     /**
      * This function allow to add an video to this snowtrick collection(videos)
      *
@@ -331,6 +336,7 @@ class Trick
             }
         }
     }
+
     // public function __toString()
     // {
     //     return $this->name;

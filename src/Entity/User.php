@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
@@ -59,12 +61,14 @@ class User implements UserInterface
      *@ORM\Column(type="boolean", nullable=true)
      */
     private $isValidated;
+    //@Assert\File(mimeType{"image/jpeg"})
+    // @Assert\NotBlank(message="please apload an image")
     /**
      * Image of user
      * 
-     *@ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
-    private $avatar;
+    protected $avatar;
     /**
      * The subscribing date
      * 
@@ -156,9 +160,9 @@ class User implements UserInterface
     }
     /**
      *
-     * @return string|null
+     *
      */
-    public function getAvatar(): ?string
+    public function getAvatar()
     {
         return $this->avatar;
     }
@@ -237,9 +241,9 @@ class User implements UserInterface
      * @param string $image
      * @return self
      */
-    public function setAvatar(string $image): self
+    public function setAvatar($avatar)
     {
-        $this->avatar = $image;
+        $this->avatar = $avatar;
         return $this;
 
     }
@@ -343,7 +347,7 @@ class User implements UserInterface
     }  
     public function __toString()
     {
-        return $this->name;
+        return $this->username;
     }
     /**
      * This function return null , we are note interessted by an encodage system

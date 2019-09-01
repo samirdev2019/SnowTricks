@@ -64,7 +64,7 @@ class Illustration
      *
      * @return string|null
      */
-    public function getUrl(): ?string
+    public function getUrl()
     {
         return $this->url;
     }
@@ -91,7 +91,7 @@ class Illustration
      * @param string $url
      * @return self
      */
-    public function setUrl(string $url): self
+    public function setUrl($url)
     {
         $this->url = $url;
         return $this;
