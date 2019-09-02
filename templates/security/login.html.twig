@@ -7,30 +7,41 @@
             <div class="well">
                     {% if error %}
                     <div class="alert alert-danger">
-                        {{ error.messageKey| trans(error.messageData, 'security') }}
+                        {# {{ error.messageKey| trans(error.messageData, 'security') }} #}
+                        <p>a wrong username or password !</p>
                     </div>
+                {% endif %}
+                {% if message %}
+                <div class="alert alert-{{type}}">
+                    {{ message }}
+                </div>
                 {% endif %} 
                 <form action="{{ path('login')}}" method="post" style="
-                background-color: #eaeaec;
-            ">
+                background-color: #eaeaec;">
+            
                     <fieldset class="p-5">
-                        <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'login'|trans }}</legend>
+                        <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'login'}}</legend>
                         <div class="form-group">
-                            <label for="username">{{ 'Username'|trans }}</label>
+                            <label for="username">{{ 'Username'}}</label>
                             <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label for="password">{{ 'Password'|trans }}</label>
+                            <label for="password">{{ 'Password'}}</label>
                             <input type="password" id="password" name="_password" class="form-control" />
                         </div>
                         <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-                        <p class="d-flex justify-content-center">
+                        <p class="d-flex justify-content-between">
+                            <label for="remember_me">
+                            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                            remember me</label>
                             <button type="submit" class="btn btn-primary col-6">
-                                <i class="fa fa-sign-in mr-2" aria-hidden="true"></i> {{ 'sign in'|trans }}
-                            </button>
+                                <i class="fa fa-sign-in mr-2" aria-hidden="true"></i> {{ 'sign in'}}
+                            </button>     
                         </p>
-                        
+                        <p>
+                            <a href="{{path('forgot_password')}}">Forgot password ?</a>
+                        </p>
                     </fieldset>
                 </form>
             </div>

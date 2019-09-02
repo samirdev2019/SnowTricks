@@ -30,17 +30,21 @@
     
     <header class="bg-light text-right ">
       {% if is_granted('ROLE_USER')%}
-      <a class="mx-1" href="#">
+      <a class="mx-1" href="{{path('delete_trick',{id:trick.id})}}">
         <i aria-hidden="true" class="fa fa-trash"></i>
       </a>
-      <a class="mx-1" href="#">
+      <a class="mx-1" href="{{path('edit_trick',{id:trick.id})}}">
         <i aria-hidden="true" class="fa fa-pencil"></i>
       </a>
       {% endif %}
     </header>
     
     <a href="{{ path ('trick_detail',{id:trick.id})}}">
-      <img class="card-img-top" src="{{ firstImg.url }}" alt="Card image cap">
+      {% for key,illustration in trick.illustrations %}
+      {% if key == 0 %}
+        <img class="card-img-top" src="{{ asset ('imgs/tricks/' ~ illustration.url) }}" alt="image trick">
+      {% endif %}
+      {% endfor %}
     </a>
     
     <div class="card-body">

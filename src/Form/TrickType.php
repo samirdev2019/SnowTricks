@@ -7,8 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -30,13 +30,10 @@ class TrickType extends AbstractType
         $builder
             ->add('category',EntityType::class,[
             'class'=>Category::class,
+            //'class'=> 'App\Entity\Category',
             'choice_label'=>'name'
             ])
-            // ->add('user',EntityType::class,
-            // [
-            //     'class'=>User::class,
-            //     'choice_label'=>'username'
-            // ])
+            
             ->add('name',TextType::class)
             ->add('description',TextareaType::class)
             ->add('videos', CollectionType::class,
@@ -57,6 +54,8 @@ class TrickType extends AbstractType
                 'allow_add'=>true,
                 'prototype'=>true,
                 'required'=>false,
+                'mapped'=>true,
+                'allow_file_upload'=>true,
                 'by_reference'=> false,
                 'error_bubbling' => false,
             ])

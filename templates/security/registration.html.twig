@@ -5,14 +5,15 @@
     <div class="row w-100 mh-100 d-flex justify-content-center align-items-center" style="height: 32rem;">
         <div class="col-sm-5">
             <div class="well">
-                 {{form_start(form)}}
-                 {{form_row(form.username,{'attr':{'placeholder':'your username...'}})}}
-                 {{form_row(form.email,{'attr':{'placeholder':'your email...'}})}}
-                 {{form_row(form.password,{'attr':{'placeholder':'your password...'}})}}
-                 {{form_row(form.confirmation,{'attr':{'placeholder':'confirm your password'}})}}
+                
+                {{form_start(form)}}
+                {{form_row(form.username,{'attr':{'placeholder':'your username...'}})}}
+                {{form_row(form.email,{'attr':{'placeholder':'your email...'}})}}
+                {{form_row(form.password,{'attr':{'placeholder':'your password...'}})}}
+                {{form_row(form.confirmation,{'attr':{'placeholder':'confirm your password'}})}}
                  
-                 <button type="submit" class="btn btn-success">register</button>
-                 {{form_end(form)}}   
+                <button type="submit" class="btn btn-success">register</button>
+                {{form_end(form)}}   
                 
             </div>
         </div>

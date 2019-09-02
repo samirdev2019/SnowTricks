@@ -7,6 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\File;
+
+
 
 
 class IllustrationType extends AbstractType
@@ -15,10 +19,20 @@ class IllustrationType extends AbstractType
     {
         $builder
             //->add('name')
-            ->add('file',FileType::class,
+            ->add('url',FileType::class,
             [
                 'label'=> 'select an image',
+                'mapped'=>false,
+                //'multiple'=>true,
                 'required'=>false,
+                
+                
+                
+                'constraints' => [
+                    new File([
+                        'mimeTypesMessage' => 'Please upload a valid image file',
+                    ])
+                ],
             ])
             
         ;
