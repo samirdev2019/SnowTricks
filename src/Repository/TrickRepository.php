@@ -1,9 +1,9 @@
 <?php
 /**
  * The TrickRepository file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  TrickRepository
  * @author   Samir <allabsamir666@gmail.com>
@@ -18,13 +18,13 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * The TrickRepository TrickRepository
- * 
+ *
  * @category Class
  * @package  TrickRepository
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
  * @link     src/Repository/TrickRepository.php
- * 
+ *
  * @method Trick|null find($id, $lockMode = null, $lockVersion = null)
  * @method Trick|null findOneBy(array $criteria, array $orderBy = null)
  * @method Trick[]    findAll()
@@ -36,10 +36,10 @@ class TrickRepository extends ServiceEntityRepository
     /**
      * The class constructor
      *
-     * @param RegistryInterface $registry 
+     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Trick::class);
-    } 
+    }
 }

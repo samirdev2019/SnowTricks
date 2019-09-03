@@ -1,9 +1,9 @@
 <?php
 /**
  * The Video file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  Video
  * @author   Samir <allabsamir666@gmail.com>
@@ -15,15 +15,16 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * The video entity class
- * 
+ *
  * @category Class
  * @package  Video
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
  * @link     src/Entity/Video.php
- * 
+ *
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  * @ORM\Table(name="videos")
  */
@@ -45,7 +46,7 @@ class Video
     private $platform;
     /**
      * The url video (integration code)
-     * 
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $url;
@@ -97,8 +98,8 @@ class Video
     /**
      * The url setter
      *
-     * @param string $url 
-     * 
+     * @param string $url
+     *
      * @return self
      */
     public function setUrl(string $url): self
@@ -109,8 +110,8 @@ class Video
     /**
      * The platform setter
      *
-     * @param string $platform 
-     * 
+     * @param string $platform
+     *
      * @return self
      */
     public function setPlatform(string $platform): self
@@ -121,8 +122,8 @@ class Video
     /**
      * The trick setter
      *
-     * @param Trick|null $trick 
-     * 
+     * @param Trick|null $trick
+     *
      * @return self
      */
     public function setTrick(?Trick $trick):self

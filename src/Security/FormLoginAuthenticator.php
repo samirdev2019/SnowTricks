@@ -1,9 +1,9 @@
 <?php
 /**
  * The FormLoginAuthenticator file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  FormLoginAuthenticator
  * @author   Samir <allabsamir666@gmail.com>
@@ -28,9 +28,10 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
 /**
- * The FormLoginAuthenticator class defines the methode of authentication user 
- * 
+ * The FormLoginAuthenticator class defines the methode of authentication user
+ *
  * @category Class
  * @package  FormLoginAuthenticator
  * @author   Samir <allabsamir666@gmail.com>
@@ -52,8 +53,11 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * @param csrfTokenManagerInterface    $tmi instance of csrfTokenManagerInterface
      * @param UserPasswordEncoderInterface $pei instace UserPasswordEncoderInterface
      */
-    public function __construct(EntityManagerInterface $em, RouterInterface $ri, 
-        csrfTokenManagerInterface $tmi, UserPasswordEncoderInterface $pei
+    public function __construct(
+        EntityManagerInterface $em,
+        RouterInterface $ri,
+        csrfTokenManagerInterface $tmi,
+        UserPasswordEncoderInterface $pei
     ) {
         $this->entityManager = $em;
         $this->router = $ri;
@@ -63,8 +67,8 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * The function defines in which conditions the class will be called.
      *
-     * @param Request $request 
-     * 
+     * @param Request $request
+     *
      * @return void
      */
     public function supports(Request $request)
@@ -75,8 +79,8 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * This function returns the authentication information elements.
      *
-     * @param Request $request 
-     * 
+     * @param Request $request
+     *
      * @return void
      */
     public function getCredentials(Request $request)
@@ -96,13 +100,14 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * This methode returns a user in the Symfony sense (UserInterface instance of
      * the Security component).
      *
-     * @param mixed                 $credentials 
-     * @param UserProviderInterface $userProviderInterface 
-     * 
+     * @param mixed                 $credentials
+     * @param UserProviderInterface $userProviderInterface
+     *
      * @return void
      */
     public function getUser(
-        $credentials, UserProviderInterface $userProviderInterface
+        $credentials,
+        UserProviderInterface $userProviderInterface
     ) {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
@@ -120,31 +125,34 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * This function allows to check at login that the credentials are valid.
      *
-     * @param [type]        $credentials 
-     * @param UserInterface $user 
-     * 
+     * @param [type]        $credentials
+     * @param UserInterface $user
+     *
      * @return void
      */
     public function checkCredentials($credentials, UserInterface $user)
-    {   
+    {
         
         return $this->passwordEncoder
             ->isPasswordValid(
-                $user, $credentials['password']
+                $user,
+                $credentials['password']
             ) && $user->getIsValidated();
     }
     /**
      * This methode allows to decide what to do in case the user is authenticated,
      * usually a redirection to a given URL.
      *
-     * @param Request        $request 
-     * @param TokenInterface $token 
-     * @param [type]         $providerKey 
-     * 
+     * @param Request        $request
+     * @param TokenInterface $token
+     * @param [type]         $providerKey
+     *
      * @return void
      */
     public function onAuthenticationSuccess(
-        Request $request, TokenInterface $token, $providerKey
+        Request $request,
+        TokenInterface $token,
+        $providerKey
     ) {
         
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {

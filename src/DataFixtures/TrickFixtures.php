@@ -1,9 +1,9 @@
 <?php
 /**
  * The TrickFixtures file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  TrickFixtures
  * @author   Samir <allabsamir666@gmail.com>
@@ -21,9 +21,10 @@ use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Illustration;
 use App\Entity\Video;
+
 /**
  * The TrickFixtures class
- * 
+ *
  * @category Class
  * @package  TrickFixtures
  * @author   Samir <allabsamir777@gmail.com>
@@ -36,7 +37,7 @@ class TrickFixtures extends Fixture
     /**
      * The constructor class with intialisation of UserPasswordEncoderInterface
      *
-     * @param UserPasswordEncoderInterface $encoder 
+     * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
@@ -45,8 +46,8 @@ class TrickFixtures extends Fixture
     /**
      * The method allows to load a fake information using faker
      *
-     * @param ObjectManager $manager 
-     * 
+     * @param ObjectManager $manager
+     *
      * @return void
      */
     public function load(ObjectManager $manager)
@@ -84,14 +85,14 @@ class TrickFixtures extends Fixture
                 $comment->setTrick($trick);
                 $comment->setUser($user);
                 $comment->setContent($faker->paragraph());
-                $comment->setCommentedAt($faker->dateTime());               
+                $comment->setCommentedAt($faker->dateTime());
                 $manager->persist($comment);
             }
             for ($k=1; $k<=3; $k++) {
                 $image = new Illustration();
                 $image->setTrick($trick);
                 $image->setName($faker->name());
-                $image->setUrl($faker->imageUrl());  
+                $image->setUrl($faker->imageUrl());
                 $manager->persist($image);
             }
             for ($m=1; $m<=3; $m++) {

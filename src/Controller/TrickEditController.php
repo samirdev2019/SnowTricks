@@ -1,9 +1,9 @@
 <?php
 /**
  * The TrickEditController file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  TrickEditController
  * @author   Samir <allabsamir666@gmail.com>
@@ -36,9 +36,10 @@ use App\Form\TrickType;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * This class allows to edit a snowtrick
- * 
+ *
  * @category Class
  * @package  TrickEditController
  * @author   Samir <allabsamir777@gmail.com>
@@ -55,11 +56,11 @@ class TrickEditController extends AbstractController
     /**
      * The constructor of class with different initialisations
      *
-     * @param TrickRepository        $trickRepository 
-     * @param IllustrationRepository $illustrationRepository 
-     * @param VideoRepository        $videoRepository 
-     * @param CategoryRepository     $categoryRepository 
-     * @param ObjectManager          $manager 
+     * @param TrickRepository        $trickRepository
+     * @param IllustrationRepository $illustrationRepository
+     * @param VideoRepository        $videoRepository
+     * @param CategoryRepository     $categoryRepository
+     * @param ObjectManager          $manager
      */
     public function __construct(
         TrickRepository $trickRepository,
@@ -74,23 +75,23 @@ class TrickEditController extends AbstractController
         $this->videoRepository = $videoRepository;
         $this->categoryRepository = $categoryRepository;
         $this->manager = $manager;
-
     }
     /**
      * This method allow to edit a illustration
      *
-     * @param Illustration $illustration 
-     * @param Request      $request 
-     * 
+     * @param Illustration $illustration
+     * @param Request      $request
+     *
      * @return Response
-     * 
+     *
      * @Route("/member/snowtrick/edit-illustration/{id}", name="edit_illustration")
      */
-    public function editIllustration(Illustration $illustration,
+    public function editIllustration(
+        Illustration $illustration,
         Request $request
     ):Response {
         if (!$illustration) {
-            //exception page 404 
+            //exception page 404
         }
         $form = $this->createForm(IllustrationType::class, $illustration);
         $form->handleRequest($request);
@@ -99,10 +100,11 @@ class TrickEditController extends AbstractController
             if ($file) {
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $originalFilename = pathinfo(
-                    $file->getClientOriginalName(), PATHINFO_FILENAME
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
                 );
                 $file->move($this->getParameter('PATH_TO_IMAGE'), $fileName);
-                $illustration->setUrl($fileName);    
+                $illustration->setUrl($fileName);
                 $illustration->setName($originalFilename);
                 $trick = $this->trickRepository
                     ->findOneBy(['id'=>$illustration->getTrick()->getId()]);
@@ -112,7 +114,7 @@ class TrickEditController extends AbstractController
                 
                 $this->manager->flush();
                 return $this->redirectToRoute('edit_trick', ['id'=>$trick->getId()]);
-            } 
+            }
         }
         return $this->render(
             'tricks/edit-illustration.html.twig',
@@ -122,11 +124,11 @@ class TrickEditController extends AbstractController
     /**
      * This method allow to edit a illustration
      *
-     * @param Trick   $trick 
-     * @param Request $request 
-     * 
+     * @param Trick   $trick
+     * @param Request $request
+     *
      * @return Response
-     * 
+     *
      * @Route("/member/trick/{id}/add-illustration/", name="add_illustration")
      */
     public function addIllustration(Trick $trick, Request $request):Response
@@ -140,10 +142,11 @@ class TrickEditController extends AbstractController
             if ($file) {
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $originalFilename = pathinfo(
-                    $file->getClientOriginalName(), PATHINFO_FILENAME
+                    $file->getClientOriginalName(),
+                    PATHINFO_FILENAME
                 );
                 $file->move($this->getParameter('PATH_TO_IMAGE'), $fileName);
-                $illustration->setUrl($fileName);    
+                $illustration->setUrl($fileName);
                 $illustration->setName($originalFilename);
                 $illustration->setTrick($trick);
                 $trick->setUpdatedAt(new \DateTime);
@@ -152,21 +155,21 @@ class TrickEditController extends AbstractController
                 
                 $this->manager->flush();
                 return $this->redirectToRoute('edit_trick', ['id'=>$trick->getId()]);
-            } 
+            }
         }
         return $this->render(
             'tricks/edit-illustration.html.twig',
             ['form' => $form->createView()]
-        );  
+        );
     }
     /**
      * This methode allows to edit a video
      *
-     * @param Video   $video 
-     * @param Request $request 
-     * 
+     * @param Video   $video
+     * @param Request $request
+     *
      * @return Response
-     * 
+     *
      * @Route("/member/snowtrick/edit-video/{id}", name="edit_video")
      */
     public function editVideo(Video $video, Request $request):Response
@@ -179,10 +182,9 @@ class TrickEditController extends AbstractController
                 ['id'=>$video->getTrick()->getId()]
             );
             $video->setUrl($url);
-            $trick->setUpdatedAt(new \DateTime); 
+            $trick->setUpdatedAt(new \DateTime);
             $this->manager->flush();
             return $this->redirectToRoute('edit_trick', ['id'=>$trick->getId()]);
-
         }
         return $this->render(
             'tricks/edit-video.html.twig',
@@ -192,11 +194,11 @@ class TrickEditController extends AbstractController
     /**
      * This methode allows to add a new video
      *
-     * @param Trick   $trick 
-     * @param Request $request 
-     * 
+     * @param Trick   $trick
+     * @param Request $request
+     *
      * @return Response
-     * 
+     *
      * @Route("/member/snowtrick/{id}/add-video", name="add_video")
      */
     public function addVideo(Trick $trick, Request $request):Response
@@ -209,7 +211,7 @@ class TrickEditController extends AbstractController
             $video->setUrl($url);
             $video->setTrick($trick);
             $trick->setUpdatedAt(new \DateTime);
-            $this->manager->persist($video);   
+            $this->manager->persist($video);
             $this->manager->flush();
             return $this->redirectToRoute('edit_trick', ['id'=>$trick->getId()]);
         }
@@ -219,12 +221,12 @@ class TrickEditController extends AbstractController
         );
     }
     /**
-     * This method allows to delete an illustration 
+     * This method allows to delete an illustration
      *
-     * @param Illustration $illustration 
-     * 
+     * @param Illustration $illustration
+     *
      * @return void
-     * 
+     *
      * @Route("/member/snowtrick/delete-illustration/{id}", name="delete_illustration")
      */
     public function deleteIllustration(Illustration $illustration)
@@ -237,12 +239,12 @@ class TrickEditController extends AbstractController
         );
     }
     /**
-     * This method allows to delete a video 
+     * This method allows to delete a video
      *
-     * @param Video $video 
-     * 
+     * @param Video $video
+     *
      * @return void
-     * 
+     *
      * @Route("/member/snowtrick/delete-video/{id}", name="delete_video")
      */
     public function deleteVideo(Video $video)
@@ -253,15 +255,14 @@ class TrickEditController extends AbstractController
             'edit_trick',
             ['id'=>$video->getTrick()->getId()]
         );
-
     }
     /**
-     * This method allows to delete a comment 
+     * This method allows to delete a comment
      *
-     * @param Comment $comment 
-     * 
+     * @param Comment $comment
+     *
      * @return void
-     * 
+     *
      * @Route("/member/snowtrick/delete-comment/{id}", name="delete_comment")
      */
     public function deleteComment(Comment $comment)

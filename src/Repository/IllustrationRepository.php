@@ -1,9 +1,9 @@
 <?php
 /**
  * The CommentRepository file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  CommentRepository
  * @author   Samir <allabsamir666@gmail.com>
@@ -18,13 +18,13 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * The IllustrationRepository class
- * 
+ *
  * @category Class
  * @package  CommentRepository
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
  * @link     src/Repository/CommentRepository.php
- * 
+ *
  * @method Illustration|null find($id, $lockMode = null, $lockVersion = null)
  * @method Illustration|null findOneBy(array $criteria, array $orderBy = null)
  * @method Illustration[]    findAll()
@@ -36,10 +36,10 @@ class IllustrationRepository extends ServiceEntityRepository
     /**
      * The class constructor
      *
-     * @param RegistryInterface $registry 
+     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Illustration::class);
-    } 
+    }
 }

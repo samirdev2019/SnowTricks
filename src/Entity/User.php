@@ -1,9 +1,9 @@
 <?php
 /**
  * The User file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  User
  * @author   Samir <allabsamir666@gmail.com>
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * The user class Entity
- * 
+ *
  * @category Class
  * @package  User
  * @author   Samir <allabsamir666@gmail.com>
@@ -39,7 +39,7 @@ use Symfony\Component\HttpFoundation\File\File;
 class User implements UserInterface
 {
     /**
-     * The user identifier 
+     * The user identifier
      *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -48,14 +48,14 @@ class User implements UserInterface
     private $id;
     /**
      * The username of user
-     * 
+     *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
     private $username;
     /**
      * The user email
-     * 
+     *
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message="The email '{{value}}' is not a valid email",
      * checkMX = true)
@@ -63,7 +63,7 @@ class User implements UserInterface
     private $email;
     /**
      * The user password
-     * 
+     *
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="5",    minMessage="your password must be 5 characters")
      */
@@ -76,25 +76,25 @@ class User implements UserInterface
     private $roles = [];
     /**
      * THE token that will be sent to the user for validate his acount
-     * 
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $token;
     /**
-     * This attribute allows to check if the user has validated his email or not 
-     * 
+     * This attribute allows to check if the user has validated his email or not
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isValidated;
     /**
      * Image of user
-     * 
+     *
      * @ORM\Column(type="string", length=255)
      */
     protected $avatar;
     /**
      * The subscribing date
-     * 
+     *
      * @ORM\Column(type="datetime")
      */
     private $subscribedAT;
@@ -102,7 +102,7 @@ class User implements UserInterface
      * This attribut will be used just for the password confirmation
      *
      * @var string
-     * 
+     *
      * @Assert\EqualTo(propertyPath="password",
      * message="you did't enter the same password" )
      */
@@ -114,11 +114,11 @@ class User implements UserInterface
      */
     private $tricks;
     /**
-     * The user can send many comments on the trick, the removal 
+     * The user can send many comments on the trick, the removal
      * user leads to delete all of his comments
      *
      * @var [collection]|comment[]
-     * 
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Comment",
      * mappedBy="user", orphanRemoval=true)
      */
@@ -133,7 +133,7 @@ class User implements UserInterface
         $this->tricks = new ArrayCollection;
     }
     /////////////////////////////////////////////////////
-    //              GETTERS                            // 
+    //              GETTERS                            //
     /////////////////////////////////////////////////////
     /**
      * The id getter
@@ -233,8 +233,8 @@ class User implements UserInterface
     /**
      * The username setter
      *
-     * @param string $username 
-     * 
+     * @param string $username
+     *
      * @return self
      */
     public function setUsername(string $username): self
@@ -245,8 +245,8 @@ class User implements UserInterface
     /**
      * The email setter
      *
-     * @param string $email 
-     * 
+     * @param string $email
+     *
      * @return self
      */
     public function setEmail(string $email): self
@@ -257,8 +257,8 @@ class User implements UserInterface
     /**
      * The password setter
      *
-     * @param string $password 
-     * 
+     * @param string $password
+     *
      * @return self
      */
     public function setPassword(string $password): self
@@ -269,8 +269,8 @@ class User implements UserInterface
     /**
      * The user role setter
      *
-     * @param array $roles 
-     * 
+     * @param array $roles
+     *
      * @return self
      */
     public function setRoles(array $roles):self
@@ -281,8 +281,8 @@ class User implements UserInterface
     /**
      * Token setter
      *
-     * @param string $token 
-     * 
+     * @param string $token
+     *
      * @return self
      */
     public function setToken(string $token): self
@@ -293,34 +293,32 @@ class User implements UserInterface
     /**
      * The avatar setter
      *
-     * @param string $avatar 
-     * 
+     * @param string $avatar
+     *
      * @return self
      */
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
         return $this;
-
     }
     /**
      * The validation email setter
      *
-     * @param boolean $validate 
-     * 
+     * @param boolean $validate
+     *
      * @return self
      */
     public function setIsValidated(bool $validate): self
     {
         $this->isValidated = $validate;
         return $this;
-
     }
     /**
      * The confirmation of password setter
      *
-     * @param string $confirm 
-     * 
+     * @param string $confirm
+     *
      * @return self
      */
     public function setConfirmation(string $confirm): self
@@ -331,8 +329,8 @@ class User implements UserInterface
     /**
      * The registration date setter
      *
-     * @param \DateTimeInterface $date 
-     * 
+     * @param \DateTimeInterface $date
+     *
      * @return self
      */
     public function setSubscribedAT(\DateTimeInterface $date): self
@@ -343,8 +341,8 @@ class User implements UserInterface
     /**
      * This function allow to add a snowtrick according to this user
      *
-     * @param Trick $trick 
-     * 
+     * @param Trick $trick
+     *
      * @return self
      */
     public function addTrick(Trick $trick): self
@@ -360,8 +358,8 @@ class User implements UserInterface
      * This function allow to remove a snowtrick according to this user
      * and update the trick object user attribut
      *
-     * @param Trick $trick 
-     * 
+     * @param Trick $trick
+     *
      * @return self
      */
     public function removeTrick(Trick $trick): self
@@ -376,11 +374,11 @@ class User implements UserInterface
         return $this;
     }
     /**
-     * The user can add a comment in the collection comments 
-     * and update the object comment user     
+     * The user can add a comment in the collection comments
+     * and update the object comment user
      *
-     * @param Comment $comment 
-     * 
+     * @param Comment $comment
+     *
      * @return self
      */
     public function addComment(Comment $comment): self
@@ -394,10 +392,10 @@ class User implements UserInterface
     }
     /**
      * This function remove comment of collection comments updating the attribut
-     * according in the comment object 
+     * according in the comment object
      *
-     * @param Comment $comment 
-     * 
+     * @param Comment $comment
+     *
      * @return self
      */
     public function removeComment(Comment $comment): self
@@ -415,7 +413,7 @@ class User implements UserInterface
      * Object to string function
      *
      * @return string
-     */ 
+     */
     public function __toString()
     {
         return $this->username;
@@ -423,12 +421,12 @@ class User implements UserInterface
     /**
      * This function return null , we are note interessted by an encodage system
      * function of interface user
-     * 
+     *
      * @return string|null
      */
     public function getSalt(): ?string
     {
-        return null; 
+        return null;
     }
     /**
      * The methode of UserInterface
@@ -445,21 +443,19 @@ class User implements UserInterface
      */
     public function serialize()
     {
-        
     }
     /**
      * The methode of UserInterface
      *
-     * @param mixed $serialized 
-     * 
+     * @param mixed $serialized
+     *
      * @return void
      */
     public function unserializa($serialized)
     {
-
     }
     /**
-     * The methode allows to create a reset token 
+     * The methode allows to create a reset token
      * to use for user had forgoen his password
      *
      * @return void
@@ -467,5 +463,5 @@ class User implements UserInterface
     public function createResetToken()
     {
         return md5($this->getUsername().$this->getEmail());
-    } 
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
  * The SecurityController file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  SecurityController
  * @author   Samir <allabsamir666@gmail.com>
@@ -28,9 +28,10 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\NamedAddress;
+
 /**
  * This class allows to controle the security access and authentication of user
- * 
+ *
  * @category Class
  * @package  SecurityController
  * @author   Samir <allabsamir777@gmail.com>
@@ -44,13 +45,13 @@ class SecurityController extends AbstractController
     private $mailer;
     private $encoderPassword;
     /**
-     * The class constructor for initilize different interface,object 
+     * The class constructor for initilize different interface,object
      * and Repositories
      *
-     * @param UserRepository               $userRepository 
-     * @param ObjectManager                $manager 
-     * @param MailerInterface              $mailer 
-     * @param UserPasswordEncoderInterface $encoderPassword 
+     * @param UserRepository               $userRepository
+     * @param ObjectManager                $manager
+     * @param MailerInterface              $mailer
+     * @param UserPasswordEncoderInterface $encoderPassword
      */
     public function __construct(
         UserRepository $userRepository,
@@ -65,16 +66,16 @@ class SecurityController extends AbstractController
     }
     /**
      * The user registration function, the user have always
-     * The ROLE_USER after registration also 
+     * The ROLE_USER after registration also
      * The password must be hached before to save it in the database
      *
-     * @param Request $request 
-     *  
+     * @param Request $request
+     *
      * @return                Response
      * @Route("/inscription", name="security_registration")
      */
     public function registration(Request $request):Response
-    { 
+    {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -104,19 +105,19 @@ class SecurityController extends AbstractController
             );
         }
         return $this->render(
-            'security/registration.html.twig', [
+            'security/registration.html.twig',
+            [
             'form' => $form->createView(),
             ]
         );
-
     }
     /**
-     * The user can log in after registering and validating his email 
+     * The user can log in after registering and validating his email
      *
-     * @param AuthenticationUtils $authenticationUtils 
-     *  
+     * @param AuthenticationUtils $authenticationUtils
+     *
      * @return Response
-     * 
+     *
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils):Response
@@ -125,7 +126,8 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
         
         return $this->render(
-            'security/login.html.twig', [
+            'security/login.html.twig',
+            [
             'error'=> $error,
             'last_username'=> $lastUsername,
             'message'=>null
@@ -133,22 +135,22 @@ class SecurityController extends AbstractController
         );
     }
     /**
-     * This function allow the user to logout 
+     * This function allow the user to logout
      *
      * @return           void
      * @Route("/logout", name="app_logout")
      */
-    public function logout():void 
+    public function logout():void
     {
         throw new \Exception('this shold never reached!');
     }
     /**
      * This fuction allow to verify the user email after registration
-     * using the link sent to his email acount with a token 
+     * using the link sent to his email acount with a token
      * as parameter by the function sendEmail()
      *
-     * @param string $token sent with email it use to confirme the email of user  
-     *  
+     * @param string $token sent with email it use to confirme the email of user
+     *
      * @return                         void
      * @Route("/confirmation/{token}", name="security_confirmation")
      */
@@ -186,9 +188,9 @@ class SecurityController extends AbstractController
      * change his password
      *
      * @param User   $user     the user will recive the email
-     * @param string $template the twig HTML template 
+     * @param string $template the twig HTML template
      * @param string $subject  the subject of email
-     * 
+     *
      * @return void
      */
     public function sendEmail(User $user, string $template, string $subject)
@@ -199,19 +201,18 @@ class SecurityController extends AbstractController
             ->subject($subject)
             ->htmlTemplate($template)
             ->context(
-                [                
+                [
                 'user' => $user,
                 ]
             );
         $this->mailer->send($email);
-        
     }
     /**
      * The user can forget his password, so this function allows a registered user
-     * to receive an email with a link/token allows him to reset his password 
-     * 
-     * @param Request $request 
-     * 
+     * to receive an email with a link/token allows him to reset his password
+     *
+     * @param Request $request
+     *
      * @return                    void
      * @Route("/forgot-password", name="forgot_password")
      */
@@ -240,7 +241,6 @@ class SecurityController extends AbstractController
                     'type' => 'success'
                     ]
                 );
-
             } else {
                 return $this->render(
                     'security/forgot-password.html.twig',
@@ -255,26 +255,28 @@ class SecurityController extends AbstractController
         }
         return $this->render(
             'security/forgot-password.html.twig',
-            ['form'=>$form->createView()]   
+            ['form'=>$form->createView()]
         );
     }
      /**
       * This function allow the user to reset his password using a link sent
-      * to him by email this link have a token as paramater , so after 
-      * the send of form by the user.the new password will be hashed and 
-      * the token will be reset before save , 
-      * after that the user will be redirect to the login page with a secces message 
+      * to him by email this link have a token as paramater , so after
+      * the send of form by the user.the new password will be hashed and
+      * the token will be reset before save ,
+      * after that the user will be redirect to the login page with a secces message
       *
-      * @param User    $user 
-      * @param Request $request 
-      * @param [type]  $token 
+      * @param User    $user
+      * @param Request $request
+      * @param [type]  $token
 
       * @return                           Response
       * @Route("/reset-password/{token}", name="reset_password")
       */
-    public function resetPassword(User $user, Request $request,
+    public function resetPassword(
+        User $user,
+        Request $request,
         $token = null
-    ):Response {    
+    ):Response {
         $form = $this->createForm(ResetPasswordType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

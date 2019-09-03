@@ -1,9 +1,9 @@
 <?php
 /**
  * The Category file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  Category
  * @author   Samir <allabsamir666@gmail.com>
@@ -15,15 +15,16 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * The group of tricks class
- * 
+ *
  * @category Class
  * @package  Category
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
  * @link     src/Entity/Category.php
- * 
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\Table(name="categories")
  */
@@ -56,7 +57,7 @@ class Category
      */
     private $tricks;
     /**
-     * Initialisation of the attributte tricks like as a arrayCollection 
+     * Initialisation of the attributte tricks like as a arrayCollection
      */
     public function __construct()
     {
@@ -101,8 +102,8 @@ class Category
     /**
      * The name getter
      *
-     * @param string $name 
-     * 
+     * @param string $name name of category
+     *
      * @return self
      */
     public function setName(string $name): self
@@ -113,8 +114,8 @@ class Category
     /**
      * The setter description
      *
-     * @param string $description 
-     * 
+     * @param string $description of category
+     *
      * @return self
      */
     public function setDescription(string $description): self
@@ -125,8 +126,8 @@ class Category
     /**
      * The method allow to add a new trick
      *
-     * @param Trick $trick 
-     * 
+     * @param Trick $trick of category
+     *
      * @return self
      */
     public function addTrick(Trick $trick): self
@@ -140,8 +141,8 @@ class Category
     /**
      * This function allow to remove an snowtrick of the category
      *
-     * @param Trick $trick 
-     * 
+     * @param Trick $trick of category
+     *
      * @return self
      */
     public function removeTrick(Trick $trick): self

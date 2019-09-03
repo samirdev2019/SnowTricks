@@ -1,9 +1,9 @@
 <?php
 /**
  * The VideoRepository file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  VideoRepository
  * @author   Samir <allabsamir666@gmail.com>
@@ -18,13 +18,13 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * The VideoRepository class
- * 
+ *
  * @category Class
  * @package  VideoRepository
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
  * @link     src/Repository/VideoRepository.php
- * 
+ *
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
  * @method Video|null findOneBy(array $criteria, array $orderBy = null)
  * @method Video[]    findAll()
@@ -36,7 +36,7 @@ class VideoRepository extends ServiceEntityRepository
     /**
      * The constructor function
      *
-     * @param RegistryInterface $registry 
+     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {

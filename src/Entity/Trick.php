@@ -1,9 +1,9 @@
 <?php
 /**
  * The Trick file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  Trick
  * @author   Samir <allabsamir666@gmail.com>
@@ -17,15 +17,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * The Entity class of Trick
- * 
+ *
  * @category Class
  * @package  Trick
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
  * @link     src/Entity/Trick.php
- * 
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
  * @ORM\Table(name="tricks")
  * @UniqueEntity(
@@ -37,7 +38,7 @@ class Trick
 {
     /**
      * Identifier of the trick
-     * 
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
@@ -45,41 +46,41 @@ class Trick
     private $id;
     /**
      * Name of the trick
-     * 
+     *
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
     /**
      * The description of the trick
-     * 
+     *
      * @ORM\Column(type="text")
-     */ 
+     */
     private $description;
     /**
      * The trick creation date
-     * 
+     *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
     /**
      * The last update date of the trick
-     * 
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
     /**
      * The trick can have more illustrations(images)
      * and its delete leads to delete all of its illustrations
-     * 
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Illustration",
      * mappedBy="trick", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid()
      */
     private $illustrations;
     /**
-     * The trick can have more videos and its removal leads to delete 
-     * all these last. 
-     * 
+     * The trick can have more videos and its removal leads to delete
+     * all these last.
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick",
      * cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid()
@@ -215,21 +216,20 @@ class Trick
     /**
      * The name setter
      *
-     * @param string $name 
-     * 
+     * @param string $name
+     *
      * @return self
      */
     public function setName(string $name):self
     {
         $this->name = $name;
         return $this;
-
     }
     /**
      * The description setter
      *
-     * @param text $description 
-     * 
+     * @param text $description
+     *
      * @return self
      */
     public function setDescription(string $description):self
@@ -240,8 +240,8 @@ class Trick
     /**
      * The create date setter
      *
-     * @param \DateTimeInterface $date 
-     * 
+     * @param \DateTimeInterface $date
+     *
      * @return self
      */
     public function setCreatedAt(\DateTimeInterface $date):self
@@ -252,8 +252,8 @@ class Trick
     /**
      * The update date setter
      *
-     * @param \DateTime $date 
-     * 
+     * @param \DateTime $date
+     *
      * @return self
      */
     public function setUpdatedAt(\DateTime $date):self
@@ -264,8 +264,8 @@ class Trick
     /**
      * The category setter
      *
-     * @param Category|null $cat 
-     * 
+     * @param Category|null $cat
+     *
      * @return self
      */
     public function setCategory(?Category $cat):self
@@ -276,8 +276,8 @@ class Trick
     /**
      * The user setter
      *
-     * @param User|null $user 
-     * 
+     * @param User|null $user
+     *
      * @return self
      */
     public function setUser(?User $user):self
@@ -286,11 +286,11 @@ class Trick
         return $this;
     }
     /**
-     * This function allow to add an illustration to this 
+     * This function allow to add an illustration to this
      * snowtrick collection(illustrations)
      *
-     * @param Illustartion $image 
-     * 
+     * @param Illustartion $image
+     *
      * @return self
      */
     public function addIllustration(Illustration $image): self
@@ -304,8 +304,8 @@ class Trick
     /**
      * The illustration setter
      *
-     * @param Illustration $illustrations 
-     * 
+     * @param Illustration $illustrations
+     *
      * @return self
      */
     public function setIllustration($illustrations):self
@@ -316,8 +316,8 @@ class Trick
     /**
      * This function allow to add an video to this snowtrick collection(videos)
      *
-     * @param Video $video 
-     * 
+     * @param Video $video
+     *
      * @return self
      */
     public function addVideo(Video $video): self
@@ -329,11 +329,11 @@ class Trick
         return $this;
     }
     /**
-     * This function allow to add an comment(message) 
+     * This function allow to add an comment(message)
      * to this snowtrick collection(comments)
      *
-     * @param Comment $message 
-     * 
+     * @param Comment $message
+     *
      * @return self
      */
     public function addComment(Comment $message): self
@@ -344,11 +344,11 @@ class Trick
         }
     }
     /**
-     * This function allow to remove an illustration(image) 
+     * This function allow to remove an illustration(image)
      * of this snowtrick collection(illustrations)
      *
-     * @param Illustration $image 
-     * 
+     * @param Illustration $image
+     *
      * @return self
      */
     public function removeIllustration(Illustration $image):self
@@ -364,8 +364,8 @@ class Trick
     /**
      * This function allow to remove an video of this snowtrick collection(videos)
      *
-     * @param Video $video 
-     * 
+     * @param Video $video
+     *
      * @return self
      */
     public function removeVideo(Video $video): self
@@ -378,11 +378,11 @@ class Trick
         }
     }
     /**
-     * This function allow to remove an comment of this snowtrick 
+     * This function allow to remove an comment of this snowtrick
      * collection(comments)
      *
-     * @param Video $comment 
-     * 
+     * @param Video $comment
+     *
      * @return self
      */
     public function removeComment(Video $comment): self

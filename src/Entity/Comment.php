@@ -1,9 +1,9 @@
 <?php
 /**
  * The Comment file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  Comment
  * @author   Samir <allabsamir666@gmail.com>
@@ -15,15 +15,16 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * The group of tricks class
- * 
+ *
  * @category Class
  * @package  Comment
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
  * @link     src/Entity/Comment.php
- * 
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  * @ORM\Table(name="comments")
  */
@@ -39,26 +40,26 @@ class Comment
     private $id;
     /**
      * The content of comment
-     * 
+     *
      * @ORM\Column(type="text")
      */
     private $content;
     /**
      * The date of comment
-     * 
+     *
      * @ORM\Column(type="datetime")
      */
     private $commentedAt;
     /**
      * The trick can have more comments
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="comments")
      * @ORM\JoinColumn(name="trick_id",                referencedColumnName="id")
      */
     private $trick;
     /**
      * The user can send more comments
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="user_id",                referencedColumnName="id",
      *  nullable=false)
@@ -121,13 +122,13 @@ class Comment
     }
 
     ////////////////////////////////////////////////////////
-    //                  SETTERS                           // 
+    //                  SETTERS                           //
     ////////////////////////////////////////////////////////
     /**
      * The content setter
      *
-     * @param string $content 
-     * 
+     * @param string $content
+     *
      * @return self
      */
     public function setContent(string $content): self
@@ -138,8 +139,8 @@ class Comment
     /**
      * The comment date seeter
      *
-     * @param \DateTimeInterface $date 
-     * 
+     * @param \DateTimeInterface $date
+     *
      * @return self
      */
     public function setCommentedAt(\DateTimeInterface $date): self
@@ -150,8 +151,8 @@ class Comment
     /**
      * The trick setter
      *
-     * @param Trick|null $trick 
-     * 
+     * @param Trick|null $trick
+     *
      * @return self
      */
     public function setTrick(?Trick $trick): self
@@ -162,8 +163,8 @@ class Comment
     /**
      * The user setter
      *
-     * @param User|null $user 
-     * 
+     * @param User|null $user
+     *
      * @return self
      */
     public function setUser(?User $user): self

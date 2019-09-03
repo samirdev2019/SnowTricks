@@ -1,9 +1,9 @@
 <?php
 /**
  * The TricksController file doc comment
- * 
- * PHP version 7.2.10 
- * 
+ *
+ * PHP version 7.2.10
+ *
  * @category Class
  * @package  TricksController
  * @author   Samir <allabsamir666@gmail.com>
@@ -35,9 +35,10 @@ use App\Form\CommentType;
 use App\Services\CommentManager;
 //use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Services\IllustrationManager;
+
 /**
  * The snowtrick controller class
- * 
+ *
  * @category Class
  * @package  TricksController
  * @author   Samir <allabsamir777@gmail.com>
@@ -52,14 +53,14 @@ class TricksController extends AbstractController
     private $categoryRepository;
     private $manager;
     /**
-     * The class constructor where we initialize the different 
+     * The class constructor where we initialize the different
      * Repositories and the objectManager
      *
-     * @param TrickRepository        $trickRepository 
-     * @param IllustrationRepository $illustrationRepository 
-     * @param VideoRepository        $videoRepository 
-     * @param CategoryRepository     $categoryRepository 
-     * @param ObjectManager          $manager 
+     * @param TrickRepository        $trickRepository
+     * @param IllustrationRepository $illustrationRepository
+     * @param VideoRepository        $videoRepository
+     * @param CategoryRepository     $categoryRepository
+     * @param ObjectManager          $manager
      */
     public function __construct(
         TrickRepository $trickRepository,
@@ -73,13 +74,12 @@ class TricksController extends AbstractController
         $this->videoRepository = $videoRepository;
         $this->categoryRepository = $categoryRepository;
         $this->manager = $manager;
-
     }
     /**
      * The home page
-     * 
+     *
      * @return Response
-     * 
+     *
      * @Route("/",name="home")
      */
     public function index():Response
@@ -89,18 +89,21 @@ class TricksController extends AbstractController
     }
     /**
      * Trick detail page
-     * 
-     * @param Trick          $trick          instance of trick class 
+     *
+     * @param Trick          $trick          instance of trick class
      * @param int            $id             the trick identifer
      * @param Request        $request        the request object
-     * @param CommentManager $commentManager for factorisation raison 
-     * 
+     * @param CommentManager $commentManager for factorisation raison
+     *
      * @return Response
-     * 
+     *
      * @Route("/snowtrick/trick_detail/{id}", name="trick_detail")
      * @Route("/snowtricks/edit_trick/{id}",  name="edit_trick")
      */
-    public function showTrick(Trick $trick, $id,Request $request,
+    public function showTrick(
+        Trick $trick,
+        $id,
+        Request $request,
         CommentManager $commentManager
     ):Response {
         $route = $request->attributes->get('_route');
@@ -116,7 +119,7 @@ class TricksController extends AbstractController
         if ($formDescription->isSubmitted() && $formDescription->isValid()) {
             $trick->setUpdatedAt(new \DateTime);
             $this->manager->flush();
-            return $this->redirectToRoute("$route", ['id' => $trick->getId()]);   
+            return $this->redirectToRoute("$route", ['id' => $trick->getId()]);
         }
         $image = $this->illustrationRepository->findOneByTrick($id);
         $illustrations = $this->illustrationRepository->findByTrick($id);
@@ -137,22 +140,23 @@ class TricksController extends AbstractController
     /**
      * Add a new trick
      *
-     * @param Request             $request 
+     * @param Request             $request
      * @param IllustrationManager $illustrationManager uses for some instructions
      *                                                 in the code factorisation
-     *                                                 raison 
-     * 
+     *                                                 raison
+     *
      * @return void
-     * 
+     *
      * @Route("/new-trick",    name="new_trick")
      * @IsGranted("ROLE_USER")
      */
-    public function addTrick(Request $request,
+    public function addTrick(
+        Request $request,
         IllustrationManager $illustrationManager
     ) {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
-        $form->handleRequest($request); 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $files = $form['illustrations']->getData();
             $files = $request->files->get('trick')['illustrations'];
@@ -160,19 +164,20 @@ class TricksController extends AbstractController
             ->multipleIllustrationSave($files, $trick);
             $trick->setIllustration($illustrations);
             $trick->setCreatedAt(new \DateTime());
-            $trick->setUser($this->getUser()); 
+            $trick->setUser($this->getUser());
             $this->manager->persist($trick);
             $this->manager->flush();
             return $this->redirectToRoute('trick_detail', ['id'=>$trick->getId()]);
         }
         return $this->render(
-            'tricks/new-trick.html.twig', ['formTrick' => $form->createView()
+            'tricks/new-trick.html.twig',
+            ['formTrick' => $form->createView()
             ]
-        );   
+        );
     }
      /**
       * This method allow to edit a trick
-      * 
+      *
       * @param Trick   $trick   instance of trick class
       * @param Request $request the request object
       *
@@ -190,17 +195,18 @@ class TricksController extends AbstractController
             $this->redirectToRoute('trick_detail', ['id'=>$trick->getId()]);
         }
         return $this->render(
-            'tricks/new-trick.html.twig', ['formTrick' => $form->createView()
+            'tricks/new-trick.html.twig',
+            ['formTrick' => $form->createView()
             ]
         );
     }
     /**
-     * This method allow to delete a trick 
+     * This method allow to delete a trick
      *
-     * @param Trick $trick 
-     * 
+     * @param Trick $trick
+     *
      * @return Response
-     * 
+     *
      * @Route("/admin/snowtrick/{id}/delete", name="delete_trick")
      */
     public function deleteTrick(Trick $trick):Response
@@ -208,5 +214,5 @@ class TricksController extends AbstractController
         $this->manager->remove($trick);
         $this->manager->flush();
         return $this->redirectToRoute('home');
-    }   
+    }
 }
