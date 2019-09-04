@@ -1,38 +1,47 @@
 <?php
 /**
- * The CommentManager file doc comment
+ * The CommentController file doc comment
  *
  * PHP version 7.2.10
  *
  * @category Class
- * @package  CommentManager
+ * @package  CommentController
  * @author   Samir <allabsamir666@gmail.com>
  * @license  Copyright 2019 General public license
- * @link     src/Services/CommentManager.php
+ * @link     src/Controller/CommentController
  */
-namespace App\Services;
+namespace App\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Forms;
-use App\Entity\Comment;
-use App\Form\CommentType;
 use App\Entity\Trick;
+use App\Entity\Comment;
 
 /**
- * This class use like as a sevice
+ * This class allows to edit a snowtrick
  *
  * @category Class
- * @package  CommentManager
- * @author   Samir <allabsamir666@gmail.com>
+ * @package  CommentController
+ * @author   Samir <allabsamir777@gmail.com>
  * @license  Copyright 2019 General public license
- * @link     src/Services/CommentManager.php
+ * @link     src/Controller/CommentController
  */
-class CommentManager extends AbstractController
+class CommentController extends AbstractController
 {
-
+    private $manager;
+    /**
+     * Initialisation of Object manager in the constructor
+     *
+     * @param ObjectManager $manager
+     */
+    public function __construct(ObjectManager $manager)
+    {
+        $this->manager=$manager;
+    }
     /**
      * This method allow to delete a comment
      *
@@ -60,15 +69,12 @@ class CommentManager extends AbstractController
      *
      * @return void
      */
-    public function addComment(
-        Comment $comment,
-        ObjectManager $manager,
-        Trick $trick
-    ) {
+    public function addComment(Comment $comment, Trick $trick)
+    {
         $comment->setCommentedAt(new \DateTime);
         $comment->setTrick($trick);
         $comment->setUser($this->getUser());
-        $manager->persist($comment);
-        $manager->flush();
+        $this->manager->persist($comment);
+        $this->manager->flush();
     }
 }

@@ -7,8 +7,12 @@
     <div class="col-sm-5">
         <div class="well">
             {{form_start(formVideo)}}
-            {{ form_row(formVideo.url,{'attr':{'placeholder':'select an image...'}})}}
-            <button type="submit" class="btn btn-primary col-6">update video</button>        
+            {{ form_row(formVideo.url,{'attr':{'placeholder':'Paste the Integration code video...'}})}}
+            {% if add %}
+            <button type="submit" class="btn btn-success col-6">Add a video</button>
+            {% else %}
+            <button type="submit" class="btn btn-success col-6">Update the video</button>
+            {% endif %}      
             {{form_end(formVideo)}}
         </div>
     </div>

@@ -114,12 +114,12 @@
   <hr>
   {% endif %}
   <!--affichage des commentaire-->
-  <div class="row mx-5 my-5">
+  <div class="row mx-12 my-5 d-flex flex-column justify-content-center">
     {% if trick.comments %}
     <h3>This snowtrick have {{trick.comments | length }} comments </h3>
     {% endif %}
     
-    <ul class="list-unstyled p-4">
+    <ul class="list-unstyled col-mx-12 pb-4">
       {% for key,comment in trick.comments %}
       
       <li class="media box-hidden my-4 p-3 bg-light w-80 l-5 border">
