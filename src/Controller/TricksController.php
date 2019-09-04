@@ -102,7 +102,6 @@ class TricksController extends AbstractController
      */
     public function showTrick(
         Trick $trick,
-        $id,
         Request $request,
         CommentManager $commentManager
     ):Response {
@@ -121,9 +120,9 @@ class TricksController extends AbstractController
             $this->manager->flush();
             return $this->redirectToRoute("$route", ['id' => $trick->getId()]);
         }
-        $image = $this->illustrationRepository->findOneByTrick($id);
-        $illustrations = $this->illustrationRepository->findByTrick($id);
-        $videos = $this->videoRepository->findByTrick($id);
+        $image = $this->illustrationRepository->findOneByTrick($trick->getId());
+        $illustrations = $this->illustrationRepository->findByTrick($trick->getId());
+        $videos = $this->videoRepository->findByTrick($trick->getId());
         $template = 'tricks/'.$route.'.html.twig';
         return $this->render(
             $template,

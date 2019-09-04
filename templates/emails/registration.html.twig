@@ -1,8 +1,8 @@
 <h3>You did it! You registered!</h3>
-
+<hr>
 Hi {{ user.username }}! You're successfully registered.
-
-{# example, assuming you have a route named "login" #}
-To login, go to: <a href="http://localhost:8000/confirmation/{{user.token}}">clic ici</a>.
-
+<hr>
+<p>Your account will be activated after you confirm it by clicking the link
+    below:</p>
+To login, go to: <a href="http://localhost:8000/confirmation/{{user.token}}">http://snowtriks/{{ user.username }}/register/confirm/{{user.token}}</a>.
 Thanks!

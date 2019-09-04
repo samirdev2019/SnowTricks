@@ -54,15 +54,15 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      * @param UserPasswordEncoderInterface $pei instace UserPasswordEncoderInterface
      */
     public function __construct(
-        EntityManagerInterface $em,
-        RouterInterface $ri,
-        csrfTokenManagerInterface $tmi,
-        UserPasswordEncoderInterface $pei
+        EntityManagerInterface $entityManager,
+        RouterInterface $router,
+        csrfTokenManagerInterface $csrfTokenManager,
+        UserPasswordEncoderInterface $passwordEncoder
     ) {
-        $this->entityManager = $em;
-        $this->router = $ri;
-        $this->csrfTokenManager = $tmi;
-        $this->passwordEncoder = $pei;
+        $this->entityManager = $entityManager;
+        $this->router = $router;
+        $this->csrfTokenManager = $csrfTokenManager;
+        $this->passwordEncoder = $passwordEncoder;
     }
     /**
      * The function defines in which conditions the class will be called.
