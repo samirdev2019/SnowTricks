@@ -57,16 +57,16 @@ class TrickFixtures extends Fixture
         $category = new Category();
         $category->setName($faker->sentence());
         $category->setDescription(
-            $faker->realText($maxNbChars = 200, $indexSize = 2)
+            $faker->realText($maxNbChars = 150, $indexSize = 2)
         );
         $manager->persist($category);
         $user = new User();
-        $user->setUsername($faker->userName());
+        $user->setUsername('username');
         $user->setEmail($faker->email());
         $user->setPassword($this->encoder->encodePassword($user, 'demo'));
         $user->setToken($faker->md5());
         $user->setIsValidated($faker->boolean());
-        $user->setAvatar($faker->imageUrl());
+        $user->setAvatar('avatarDefault.png');
         $user->setSubscribedAT($faker->dateTime());
         $user->setRoles(['ROLE_USER']);
         $manager->persist($user);
@@ -92,14 +92,14 @@ class TrickFixtures extends Fixture
                 $image = new Illustration();
                 $image->setTrick($trick);
                 $image->setName($faker->name());
-                $image->setUrl($faker->imageUrl());
+                $image->setUrl("fixtures$k.jpeg");
                 $manager->persist($image);
             }
             for ($m=1; $m<=3; $m++) {
                 $media = new Video();
                 $media->setTrick($trick);
-                $media->setPlatform($faker->name());
-                $media->setUrl($faker->mimeType());
+                $media->setPlatform("youtube");
+                $media->setUrl('<iframe width="853" height="480" src="https://www.youtube.com/embed/V9xuy-rVj9w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
                 $manager->persist($media);
             }
         }

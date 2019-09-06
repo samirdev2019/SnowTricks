@@ -32,25 +32,6 @@ use App\Entity\Trick;
  */
 class CommentManager extends AbstractController
 {
-
-    /**
-     * This method allow to delete a comment
-     *
-     * @param Comment $comment
-     *
-     * @return Response
-     *
-     * @Route("/member/snowtrick/delete-comment/{id}", name="delete_comment")
-     */
-    public function deleteComment(Comment $comment)
-    {
-        $this->manager->remove($comment);
-        $this->manager->flush();
-        return $this->redirectToRoute(
-            'edit_trick',
-            ['id'=>$comment->getTrick()->getId()]
-        );
-    }
     /**
      * This function allows to execute some instructions for save the comment
      *

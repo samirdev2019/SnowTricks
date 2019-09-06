@@ -33,6 +33,9 @@ use App\Repository\TrickRepository;
  */
 class IllustrationManager extends AbstractController
 {
+    /**
+     * @var [type]
+     */
     private $manager;
     private $trickRepository;
     /**
@@ -55,9 +58,9 @@ class IllustrationManager extends AbstractController
      * @param array $files
      * @param Trick $trick
      *
-     * @return void
+     * @return array
      */
-    public function multipleIllustrationUpload(array $files, Trick $trick)
+    public function multipleIllustrationUpload(array $files, Trick $trick):array
     {
         foreach ($files as $file) {
             $url = $file['url'];

@@ -69,12 +69,12 @@ class CommentController extends AbstractController
      *
      * @return void
      */
-    public function addComment(Comment $comment, Trick $trick)
-    {
-        $comment->setCommentedAt(new \DateTime);
-        $comment->setTrick($trick);
-        $comment->setUser($this->getUser());
-        $this->manager->persist($comment);
-        $this->manager->flush();
-    }
+    // public function addComment(Comment $comment, Trick $trick)
+    // {
+    //     $comment->setCommentedAt(new \DateTime);
+    //     $comment->setTrick($trick);
+    //     $comment->setUser($this->getUser());
+    //     $this->manager->persist($comment);
+    //     $this->manager->flush();
+    // }
 }

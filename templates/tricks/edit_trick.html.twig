@@ -74,7 +74,7 @@
             {% if is_granted('ROLE_USER')%}
             <p>
                 <a class="mx-1" href="{{path('delete_video',{id:video.id})}}">
-                    <i aria-hidden="true" class="fa fa-trash"></i>
+                    <i aria-hidden="true" class="fa fa-trash text-danger"></i>
                 </a>
                 <a class="mx-1" href="{{path('edit_video',{id:video.id})}}">
                     <i aria-hidden="true" class="fa fa-pencil"></i>

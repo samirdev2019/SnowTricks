@@ -9,8 +9,8 @@ this porject is created as part of a PHP / Symfony application developer trainin
 
 # The quality of the code
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/27c4a10d87924d29bbe0b6528ccdb3a6)](https://www.codacy.com/app/samirdev2019/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=samirdev2019/SnowTricks&amp;utm_campaign=Badge_Grade)
 <a href="https://codeclimate.com/github/samirdev2019/SnowTricks/maintainability"><img src="https://api.codeclimate.com/v1/badges/6063d0f2e9f3c6df3c51/maintainability" /></a>
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/27c4a10d87924d29bbe0b6528ccdb3a6)](https://www.codacy.com/app/samirdev2019/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=samirdev2019/SnowTricks&amp;utm_campaign=Badge_Grade)
 
 # How to install the project
 
@@ -31,6 +31,9 @@ this porject is created as part of a PHP / Symfony application developer trainin
 
 <h4>6 - Run the server :</h4>
 <pre><code>PHP -S localhost:8080</pre></code>
+<h4>7- User registred:</h>
+<p>username : username</p>
+<p>password : demo </p>
 
 
 

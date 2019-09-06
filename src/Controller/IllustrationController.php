@@ -106,6 +106,7 @@ class IllustrationController extends AbstractController
         $form = $this->createForm(IllustrationType::class, $illustration);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //$data = $form->getData(); essayer d'utiliser uniquement url au lieu de form
             $illustrationManager->
             singleIllustrationUpload($form, $illustration, $trick);
             return $this->redirectToRoute('edit_trick', ['id'=>$trick->getId()]);

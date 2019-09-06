@@ -160,7 +160,7 @@ class TricksController extends AbstractController
             $files = $form['illustrations']->getData();
             $files = $request->files->get('trick')['illustrations'];
             $illustrations = $illustrationManager
-            ->multipleIllustrationSave($files, $trick);
+            ->multipleIllustrationUpload($files, $trick);
             $trick->setIllustration($illustrations);
             $trick->setCreatedAt(new \DateTime());
             $trick->setUser($this->getUser());
