@@ -14,7 +14,7 @@ this porject is created as part of a PHP / Symfony application developer trainin
 
 # How to install the project
 
-<h4>1 - Download or clone the repository git</h4>
+<h4>1 - Download or clone the repository git form</h4>
 <pre><code>git@github.com:samirdev2019/SnowTricks.git</pre></code>
 
 <h4>2 - Download dependencies :</h4>
