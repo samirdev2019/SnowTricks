@@ -13,11 +13,11 @@ this porject is created as part of a PHP / Symfony (4.3) application developer t
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/27c4a10d87924d29bbe0b6528ccdb3a6)](https://www.codacy.com/app/samirdev2019/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=samirdev2019/SnowTricks&amp;utm_campaign=Badge_Grade)
 
 # snowtricks require & use:
-<p>``1- PHP 7.2.10 or an version ulterieure to run``</p>
-<p>``2-Mysql ~5.7.23``</p>
-<p>``3- Bootstrap 4``</p>
-<p>``4- jquery-3.2.1``</p>
-<p>``5 ajax/libs/popper.js/1.12.9``</p>
+<p> ~1- PHP 7.2.10 or an version ulterieure to run</p>
+<p>2-Mysql ~5.7.23</p>
+<p>3- Bootstrap 4</p>
+<p>4- jquery-3.2.1</p>
+<p>5 ajax/libs/popper.js/1.12.9</p>
 
 # How to install the project
 
