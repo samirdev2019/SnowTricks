@@ -1,6 +1,6 @@
 # The SnowTricks community site-Projet-6
 
-this porject is created as part of a PHP / Symfony application developer training, without using any bundle,
+this porject is created as part of a PHP / Symfony (4.3) application developer training, without using any bundle,
 
 ## General idea around project
 <p>Jimmy Sweat is an ambitious entrepreneur passionate about snowboarding. Its goal is to create a collaborative website to make the sport known to the general public and help to learn tricks.</p>
@@ -11,6 +11,13 @@ this porject is created as part of a PHP / Symfony application developer trainin
 
 <a href="https://codeclimate.com/github/samirdev2019/SnowTricks/maintainability"><img src="https://api.codeclimate.com/v1/badges/6063d0f2e9f3c6df3c51/maintainability" /></a>
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/27c4a10d87924d29bbe0b6528ccdb3a6)](https://www.codacy.com/app/samirdev2019/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=samirdev2019/SnowTricks&amp;utm_campaign=Badge_Grade)
+
+#snowtricks require & use:
+``1- PHP 7.2.10 or an version ulterieure to run
+2-Mysql ~5.7.23
+3- Bootstrap 4
+4- jquery-3.2.1
+5 ajax/libs/popper.js/1.12.9``
 
 # How to install the project
 
@@ -32,8 +39,8 @@ this porject is created as part of a PHP / Symfony application developer trainin
 <h4>6 - Run the server :</h4>
 <pre><code>PHP -S localhost:8080</pre></code>
 <h4>7- User registred:</h>
-<p>username : username</p>
-<p>password : demo </p>
+``<p>username : username</p>``
+``<p>password : demo </p>``
 
 
 
