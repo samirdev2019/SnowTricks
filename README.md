@@ -13,7 +13,7 @@ this porject is created as part of a PHP / Symfony (4.3) application developer t
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/27c4a10d87924d29bbe0b6528ccdb3a6)](https://www.codacy.com/app/samirdev2019/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=samirdev2019/SnowTricks&amp;utm_campaign=Badge_Grade)
 
 # snowtricks require & use:
-<p> ~1- PHP 7.2.10 or an version ulterieure to run</p>
+<p>1- PHP 7.2.10 or an version ulterieure to run</p>
 <p>2-Mysql ~5.7.23</p>
 <p>3- Bootstrap 4</p>
 <p>4- jquery-3.2.1</p>
@@ -37,7 +37,7 @@ this porject is created as part of a PHP / Symfony (4.3) application developer t
 <pre><code>php bin/console doctrine:fixtures:load</pre></code>
 
 <h4>6 - Run the server :</h4>
-<pre><code>PHP -S localhost:8080</pre></code>
+<pre><code>PHP -S localhost:8000</pre></code>
 <h4>7- User registred:</h>
 <pre><code><p>username : username</p>
 <p>password : demo </p></pre></code>
