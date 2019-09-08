@@ -145,7 +145,7 @@ class Comment
      */
     public function setCommentedAt(\DateTimeInterface $date): self
     {
-        $this->commentedAT = $date;
+        $this->commentedAt = $date;
         return $this;
     }
     /**

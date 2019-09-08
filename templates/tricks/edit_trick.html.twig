@@ -157,8 +157,8 @@
         {% endif %}
         
         <ul class="list-unstyled col-mx-12 pb-4">
-            {% for key,comment in trick.comments %}
-            
+          {#  {% for key,comment in trick.comments %} #}
+          {% for comment in comments %}
             <li class="media box-hidden my-4 p-3 w-80 l-5 border">
                 <img src="{{ asset ('imgs/' ~ comment.user.avatar)}}" class="avatar mr-3 rounded-circle img-thumbnail imgtosmall" alt="...">
                 <div class="media-body">

@@ -21,6 +21,7 @@ use Symfony\Component\Form\Forms;
 use App\Repository\TrickRepository;
 use App\Repository\IllustrationRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\VideoRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Illustration;
@@ -51,6 +52,7 @@ class TricksController extends AbstractController
     private $illustrationRepository;
     private $videoRepository;
     private $categoryRepository;
+    private $commentRepository;//ad
     private $manager;
     /**
      * The class constructor where we initialize the different
@@ -67,12 +69,14 @@ class TricksController extends AbstractController
         IllustrationRepository $illustrationRepository,
         VideoRepository $videoRepository,
         CategoryRepository $categoryRepository,
+        CommentRepository $commentRepository,//ad
         ObjectManager $manager
     ) {
         $this->trickRepository = $trickRepository;
         $this->illustrationRepository = $illustrationRepository;
         $this->videoRepository = $videoRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->commentRepository = $commentRepository; //add
         $this->manager = $manager;
     }
     /**
@@ -84,7 +88,7 @@ class TricksController extends AbstractController
      */
     public function index():Response
     {
-        $tricks = $this->trickRepository->findAll();
+        $tricks = $this->trickRepository->findAllOrdred();
         return $this->render('tricks/home.html.twig', ['tricks' => $tricks]);
     }
     /**
@@ -124,6 +128,7 @@ class TricksController extends AbstractController
         $illustrations = $this->illustrationRepository->findByTrick($trick->getId());
         $videos = $this->videoRepository->findByTrick($trick->getId());
         $template = 'tricks/'.$route.'.html.twig';
+        $comments = $this->commentRepository->findAllOrdred($trick);//ad
         return $this->render(
             $template,
             [
@@ -131,6 +136,7 @@ class TricksController extends AbstractController
                 'image' => $image,
                 'illustrations' => $illustrations,
                 'videos' => $videos,
+                'comments' => $comments, //add
                 'commentform' => $form->createView(),
                 'descriptionForm' => $formDescription->createView(),
             ]
