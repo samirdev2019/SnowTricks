@@ -51,7 +51,11 @@ class Trick
      */
     private $name;
     /**
-     * The description of the trick
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     * 
+     */
+    private $slug;
+    /**
      *
      * @ORM\Column(type="text")
      */
@@ -166,7 +170,7 @@ class Trick
      */
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->updatedAt; // FORM tester les méthode d'une class (parametrer)
     }
     /**
      * The getter of category
@@ -176,6 +180,15 @@ class Trick
     public function getCategory(): ?Category
     {
         return $this->category;
+    }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+    public function setSlug(string $slug): ?self
+    {
+        $this->slug = $slug;
+        return $this;
     }
     /**
      * The getter of user
@@ -394,4 +407,8 @@ class Trick
             }
         }
     }
+    public function createSlug($str){
+        $slug = strtolower(trim(preg_replace('/[\s-]+/', '-', preg_replace('/[^A-Za-z0-9-]+/', '-', preg_replace('/[&]/', 'and', preg_replace('/[\']/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $str))))), '-'));
+        return $slug;
+    } 
 }

@@ -2,3 +2,6 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+trick_detail:
+  path: /snowtrick/{slug}
+  controller: App\Controller\TricksController::showTrick

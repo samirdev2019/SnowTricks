@@ -33,13 +33,13 @@
       <a class="mx-1" href="{{path('delete_trick',{id:trick.id})}}">
         <i aria-hidden="true" class="fa fa-trash"></i>
       </a>
-      <a class="mx-1" href="{{path('edit_trick',{id:trick.id})}}">
+      <a class="mx-1" href="{{path('edit_trick',{slug:trick.slug})}}">
         <i aria-hidden="true" class="fa fa-pencil"></i>
       </a>
       {% endif %}
     </header>
     
-    <a href="{{ path ('trick_detail',{id:trick.id})}}">
+    <a href="{{'snowtrick/' ~ trick.slug}}">
       {% for key,illustration in trick.illustrations %}
       {% if key == 0 %}
         <img class="card-img-top" src="{{ asset ('imgs/tricks/' ~ illustration.url) }}" alt="image trick">
@@ -50,7 +50,7 @@
     <div class="card-body">
       <h5 class="card-title bold">{{ trick.name| raw }}</h5>
       <p class="card-text">{{ trick.description| raw}}
-        <a href="{{ path ('trick_detail',{id:trick.id})}}" class="ml-2">
+        <a href="{{'snowtrick/' ~ trick.slug}}" class="ml-2">
           <p>see more</p>
         </a>
       </p>

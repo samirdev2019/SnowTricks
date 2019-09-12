@@ -101,8 +101,8 @@ class TricksController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/snowtrick/trick_detail/{id}", name="trick_detail")
-     * @Route("/snowtricks/edit_trick/{id}",  name="edit_trick")
+     * @Route("/snowtrick/{slug}", name="trick_detail")
+     * @Route("/snowtrick/{slug}",  name="edit_trick")
      */
     public function showTrick(
         Trick $trick,
@@ -117,18 +117,19 @@ class TricksController extends AbstractController
         $formDescription->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $commentManager->addComment($comment, $this->manager, $trick);
-            return $this->redirectToRoute("$route", ['id' => $trick->getId()]);
+            return $this->redirectToRoute("$route", ['slug' => $trick->getSlug()]);
         }
         if ($formDescription->isSubmitted() && $formDescription->isValid()) {
             $trick->setUpdatedAt(new \DateTime);
+            $trick->setSlug($trick->createSlug($trick->getName()));
             $this->manager->flush();
-            return $this->redirectToRoute("$route", ['id' => $trick->getId()]);
+            return $this->redirectToRoute("$route", ['slug' => $trick->getSlug()]);
         }
         $image = $this->illustrationRepository->findOneByTrick($trick->getId());
         $illustrations = $this->illustrationRepository->findByTrick($trick->getId());
         $videos = $this->videoRepository->findByTrick($trick->getId());
         $template = 'tricks/'.$route.'.html.twig';
-        $comments = $this->commentRepository->findAllOrdred($trick);//ad
+        $comments = $this->commentRepository->findAllOrdred($trick);
         return $this->render(
             $template,
             [
@@ -136,7 +137,7 @@ class TricksController extends AbstractController
                 'image' => $image,
                 'illustrations' => $illustrations,
                 'videos' => $videos,
-                'comments' => $comments, //add
+                'comments' => $comments,
                 'commentform' => $form->createView(),
                 'descriptionForm' => $formDescription->createView(),
             ]
@@ -169,10 +170,11 @@ class TricksController extends AbstractController
             ->multipleIllustrationUpload($files, $trick);
             $trick->setIllustration($illustrations);
             $trick->setCreatedAt(new \DateTime());
+            $trick->setSlug($trick->createSlug($trick->getName()));
             $trick->setUser($this->getUser());
             $this->manager->persist($trick);
             $this->manager->flush();
-            return $this->redirectToRoute('trick_detail', ['id'=>$trick->getId()]);
+            return $this->redirectToRoute('trick_detail', ['slug'=>$trick->getSlug()]);
         }
         return $this->render(
             'tricks/new-trick.html.twig',
@@ -196,8 +198,9 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setUpdatedAt(new \DateTime());
+            $trick->setSlug($trick->getName());
             $this->manager->flush();
-            $this->redirectToRoute('trick_detail', ['id'=>$trick->getId()]);
+            $this->redirectToRoute('trick_detail', ['slug'=>$trick->getSlug()]);
         }
         return $this->render(
             'tricks/new-trick.html.twig',
