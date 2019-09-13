@@ -257,7 +257,7 @@ class Trick
      *
      * @return self
      */
-    public function setCreatedAt(\DateTimeInterface $date):self
+    public function setCreatedAt(\DateTime $date):self
     {
          $this->createdAt = $date;
          return $this;
@@ -355,6 +355,7 @@ class Trick
             $this->comments[] = $message;
             $message->setTrick($this);
         }
+        return $this;
     }
     /**
      * This function allow to remove an illustration(image)

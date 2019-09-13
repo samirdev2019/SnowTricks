@@ -182,32 +182,32 @@ class TricksController extends AbstractController
             ]
         );
     }
-     /**
-      * This method allow to edit a trick
-      *
-      * @param Trick   $trick   instance of trick class
-      * @param Request $request the request object
-      *
-      * @return Response The response
-      *
-      * @Route("/admin/snowtrick/{id}/edit", name="trick_edit", methods="GET|POST")
-      */
-    public function editTrick(Trick $trick, Request $request):Response
-    {
-        $form = $this->createForm(TrickType::class, $trick);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $trick->setUpdatedAt(new \DateTime());
-            $trick->setSlug($trick->getName());
-            $this->manager->flush();
-            $this->redirectToRoute('trick_detail', ['slug'=>$trick->getSlug()]);
-        }
-        return $this->render(
-            'tricks/new-trick.html.twig',
-            ['formTrick' => $form->createView()
-            ]
-        );
-    }
+    //  /**
+    //   * This method allow to edit a trick
+    //   *
+    //   * @param Trick   $trick   instance of trick class
+    //   * @param Request $request the request object
+    //   *
+    //   * @return Response The response
+    //   *
+    //   * @Route("/admin/snowtrick/{id}/edit", name="trick_edit", methods="GET|POST")
+    //   */
+    // public function editTrick(Trick $trick, Request $request):Response
+    // {
+    //     $form = $this->createForm(TrickType::class, $trick);
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $trick->setUpdatedAt(new \DateTime());
+    //         $trick->setSlug($trick->getName());
+    //         $this->manager->flush();
+    //         $this->redirectToRoute('trick_detail', ['slug'=>$trick->getSlug()]);
+    //     }
+    //     return $this->render(
+    //         'tricks/new-trick.html.twig',
+    //         ['formTrick' => $form->createView()
+    //         ]
+    //     );
+    // }
     /**
      * This method allow to delete a trick
      *
