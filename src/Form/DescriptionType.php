@@ -47,14 +47,14 @@ class DescriptionType extends AbstractType
                 'name',
                 TextType::class
             )
-            // ->add(
-            //     'category',
-            //     EntityType::class,
-            //     [
-            //     'class'=>Category::class,
-            //     'choice_label'=>'name'
-            //     ]
-            // )
+            ->add(
+                'category',
+                EntityType::class,
+                [
+                'class'=>Category::class,
+                'choice_label'=>'name'
+                ]
+            )
             ->add(
                 'description',
                 TextareaType::class,

@@ -5,12 +5,13 @@ use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\Video;
 use App\Entity\Comment;
-
 use App\Entity\Category;
 use App\Entity\Illustration;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
+/**
+ * @test unit class trick
+ */
 class TrickTest extends TestCase
 {
     private $trick;
